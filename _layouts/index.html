@@ -5,6 +5,30 @@
     <body class="index">
         {% include navigation.html %}
 
+        <div class="chapter">
+            <p class="note for-summary"> You may run <code>make test</code> instead of <code>./scripts/test_quick</code> to run
+            tests under Valgrind, but it will take several minutes instead of seconds.
+            If something breaks, please <a href="{{ site.bugs_url }}">file a bug report</a>.
+            </p>
+            <p class="abstract"> Getting started with Viua VM is straightforward; it is the standard "clone-make-test" procedure.
+            Executing the follwing commands should give you a fully functioning VM (remeber to use GCC 5, GCC 6 or recent version
+            of Clang++; the compiler you use must support at least C++11):
+            </p>
+            <div class="clear"></div>
+
+            <p class="note"> Automatic C++ standard support detection is not available for Clang++. </p>
+            <p>
+            {% highlight bash %}
+            $ git clone {{ site.repository_url }}
+            $ ./scripts/regenerate_cxxflags.sh  # optional: only for GCC, run only if you're not sure if your GCC supports C++14
+                                                # if this does not work, manually change CXX_STANDARD to c++11 in Makefile
+            $ make -j 4                         # make using at 4 threads to speed the process up a bit
+            $ ./scripts/test_quick              # perform quick test to see if everything works as it should
+            {% endhighlight %}
+            </p>
+            <div class="clear"></div>
+        </div>
+
         <section class="chapter">
             <h1> Manuals </h2>
 
