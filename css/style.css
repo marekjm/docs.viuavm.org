@@ -118,12 +118,24 @@ nav span.spacer {
  */
 .chapter {
     display: block;
-    margin: 1em auto;
+    margin: 2em auto 6em auto;
     padding: 0;
     width: 80%;
     font-family: serif;
     text-align: justify;
+    border-bottom: 1px solid #060;
 }
+
+.chapter > h1 {
+    font-size: 3em;
+    padding: 0 0 0 0.5em;
+    border-bottom: 1px solid #060;
+}
+.chapter > h2 {
+    font-size: 2em;
+    padding: 0 0 0 0.75em;
+}
+
 .chapter p {
     display: block;
     width: 75%;
@@ -146,12 +158,10 @@ nav span.spacer {
     margin: 0 0 1em 0;
     font-size: 1.25em;
 }
-
 .chapter p.abstract em, .chapter p.summary em {
     color: #d0d006;
     font-style: normal;
 }
-
 .chapter p > code {
     padding: 2px;
     color: #40cf40;
