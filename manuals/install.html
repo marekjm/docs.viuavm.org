@@ -1,0 +1,75 @@
+---
+title: Installation instructions
+layout: default
+id: manuals__install
+---
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="abstract"> This manual contains compilation and installation instructions; steps you have to take in order to get Viua VM running on your system.
+    </p>
+</section>
+
+<section class="big-fat-warning big-yellow-warning">
+    <h1> Incomplete </h1>
+
+    <p> This manual may be incomplete. Should anything be unclear, incomprehensible, or just plain wrong, please file a bug report. </p>
+</section>
+
+<section class="chapter">
+    <h1> Prerequisites </h1>
+
+    <p class="summary"> There are some minimal requirements that you must fulfill before you can begin the installaction process.
+    They are listed and explained in this section.
+    </p>
+
+    <h2> C++ compiler </h2>
+
+    <p class="note"> This manual assumes that you compile Viua with GCC 6.1.1 or later.
+    </p>
+    <p> Viua VM must be compiled using a relatively recent C++ compiler; the compiler must support C++14, or at least C++11.
+    If the compiler you have available supports only C++11 you have to set <code>CXX_STANDARD</code> variable inside the <code>Makefile</code>
+    to <code>c++11</code> (by default it is set to <code>c++14</code>).
+    It is recommended to use <a href="https://gcc.gnu.org/">GCC</a> compiler (version 5.3 or later).
+    If you do not have GCC available, the VM can also be compiled with <a href="http://clang.llvm.org/">Clang</a> (version 3.5 or later).
+    </p>
+    <div class="clear"></div>
+
+    <h2> Operating system </h2>
+
+    <p class="note"> This manual assumes that you are on the Linux operating system, but any *nix-like operating system should be sufficient
+    to run the VM.
+    </p>
+    <p> The development and testing of the VM is done on Linux.
+    There are rumours that the VM is also able to run on FreeBSD, although there were some problems with the way symbols in shared libraries
+    are resolved (which lead to crashes when using foreign modules), but this should no longer be a problem.
+    </p>
+    <div class="clear"></div>
+
+    <h2> Hardware </h2>
+
+    <p class="note"> This manual assumes that your CPU has at least two cores available. </p>
+    <p> The VM can run on x86_64 and ARMv8.
+    The list of hardware the VM is regularly tested on is quite short at the moment:
+
+        <ul>
+            <li>Amlogic ARM® Cortex®-A53(ARMv8): 2.0Ghz, 4C</li>
+            <li>AMD A10-7850K: 3.7Ghz, 4C</li>
+            <li>Intel® Core(TM) i5-2400: 3.1GHz, 4C</li>
+        </ul>
+
+    The VM is not tested on any 32 bit system.
+    </p>
+    <div class="clear"></div>
+
+    <h2> Internet connection </h2>
+
+    <p> It is best that you would have a relatively stable Internet connection to fetch updates from the repository, and
+    be able to access (however scarce) documentation.
+    It is not neccessary, though and you can do without it, provided you can access Internet once in a while at your local
+    library, University or similar organisation to download the code and docs in bigger chunks.
+    If this is the case, I would advise you to clone not only the repository with code, but also the documentation website
+    sources.
+    </p>
+</section>

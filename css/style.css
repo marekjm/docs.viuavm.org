@@ -159,8 +159,9 @@ nav span.spacer {
 /*  Note cast to the right side of the screen.
  */
 .chapter p.note {
-    font-size: 1em;
     width: 23%;
+    margin: 0 0 1em 0;
+    font-size: 1em;
     float: right;
 }
 .chapter p.note.for-summary, .chapter p.note.for-abstract {

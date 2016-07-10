@@ -6,3 +6,7 @@ url: "http://docs.viuavm.org"
 repository_url: "https://github.com/marekjm/viuavm"
 releases_url: "https://github.com/marekjm/viuavm/releases"
 bugs_url: "https://github.com/marekjm/viuavm/issues"
+
+collections:
+    manuals:
+        output: true
