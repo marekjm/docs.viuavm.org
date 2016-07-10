@@ -167,7 +167,7 @@ nav span.spacer {
     color: #40cf40;
     font-weight: bold;
 }
-.chapter p.note > code {
+.chapter p.note.important-note > code {
     color: #000;
 }
 
