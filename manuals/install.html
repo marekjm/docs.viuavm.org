@@ -72,4 +72,102 @@ id: manuals__install
     If this is the case, I would advise you to clone not only the repository with code, but also the documentation website
     sources.
     </p>
+
+    <h2> Tools </h2>
+
+    <p class="note important-note"> Python and Valgrind are required to run full test suite.
+    </p>
+    <p> Several additional tools are required for the development of the VM:
+
+        <ul>
+            <li> Valgrind 3.11 (or later): required to run memory tests </li>
+            <li> Python 3.5 (or later): required to run test suite </li>
+        </ul>
+    </p>
+    <div class="clear"></div>
+</section>
+
+<section class="chapter">
+    <h1> Obtaining and compiling code </h1>
+
+    <p> This section describes how to obtain and compile Viua VM code. <p>
+
+    <h2> Cloning the repository </h2>
+
+    <p> You can fetch the code from Github.
+    In order to do so, go to your projects directory, and clone the repository.
+    Example:
+
+    {% highlight bash %}
+             ~ $ cd ~/projects
+    ~/projects $ git clone --recursive --branch devel {{ site.repository_url }}
+    ~/projects $ cd ./viuavm
+    {% endhighlight %}
+
+    This should give you the most recent version of the code in repository.
+    </p>
+
+    <h2> Compilation </h2>
+
+    <p class="note important-note"> Remember to set the <code>CXX_STANDARD</code> variable in Makefile to <code>c++11</code>
+    before compilation if your compiler does not support C++14.
+    </p>
+    <p> Compilation is performed using <code>make</code> tool.
+
+    {% highlight bash %}
+    # the `-j 4` tells make to execute 4 "jobs" at once, this may speed up the compilation
+    # for best results (i.e. shortest compilation time) give `-j` the number of cores your machine
+    # has available
+    $ make -j 4
+    {% endhighlight %}
+    </p>
+    <div class="clear"></div>
+
+    <p> If you are on Linux, you may also use developer scripts to compile the machine.
+    They automate the process a bit more than just plain make, but are not guaranteed to work on every
+    system; they require <code>dc</code> (desktop calculator), <code>xargs</code>, <code>sed</code> and
+    a few other tools to be present.
+
+    {% highlight bash %}
+    # automatically detects if your compiler supports C++14, supports only GCC
+    $ ./scripts/regenerate_cxxflags.sh
+    {% endhighlight %}
+
+    {% highlight bash %}
+    # automatically detects how many cores your machine has and
+    # executes make with appropriate -j argument
+    $ ./scripts/compile
+    {% endhighlight %}
+
+    {% highlight bash %}
+    # performs a "clean build"
+    # removes all files compiled earlier, automatically detects
+    # how many cores your machine has and executes make with
+    # appropriate -j argument
+    $ ./scripts/recompile
+    {% endhighlight %}
+    </p>
+
+    <h2> Testing </h2>
+
+    <p class="note"> Tests may take several minutes, you can make yourself a coffee or a cup of tea in the meantime,
+    unless you have a fast CPU.
+    </p>
+    <p> After compilation you should verify if the VM is working correctly.
+    This can be done by executing the test suite; it will check if all the features of the VM are in working
+    order (compilation, disassembling, static and dynamic linking, linking and calling FFI modules and
+    functions, etc.).
+
+    {% highlight bash %}
+    $ make test
+    {% endhighlight %}
+
+    If all tests finish successfully the VM should work on your system.
+    </p>
+    <div class="clear"></div>
+
+    <p> Do not run the test suite manually; always use the <code>make test</code> or the <code>./scripts/test_quick</code> wrapper
+    because they will setup required environment variables (e.g. <code>VIUAPATH</code>) for you.
+    </p>
+
 </section>
