@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    {% include head.html %}
+
+    <body class="index">
+        {% include navigation.html %}
+
+        <section class="chapter">
+            <h1> Manuals </h2>
+
+            <p class="summary"> <a href="/manuals.html">Manuals</a> are <em>short articles explaining how to use
+            specific features of the machine</em>, intended to be reminders (a bit like <code>man</code> pages
+            on *nix-like system) for people who already know what they are looking for.
+            The reader is assumed to have prior C++ and Viua VM programming experience.
+            </p>
+        </section>
+
+        <section class="chapter">
+            <h1> Tutorials </h1>
+
+            <p class="summary"> <a href="/tutorials.html">Tutorials</a> are <em>articles of varying length, explaining
+            how to program Viua VM, and related projects</em> (e.g. how to write a C++ extension module).
+            These articles are written as easy to follow <em>step-by-step guides</em>, explaining majority of the things as
+            they are encountered in text.
+            The reader is expected to have prior programming experience, and be reasonably proficient in the craft.
+            </p>
+        </section>
+
+        <section class="chapter">
+            <h1> References </h1>
+
+            <p class="note for-summary">References also contain VM instruction set reference, and bytecode format
+            description. </p>
+            <p class="summary"> <a href="/references.html">References</a> are <em>lists of features, with short examples</em>
+            of usage (in the spirit of <a href="http://cppreference.com/">cppreference.com</a>).
+            They are intended either for people who just need to refresh their memory (what arguments does a function
+            take, in which module was a function implemented, etc.), or people who are interested in feature lists.
+            </p>
+            <div class="clear"></div>
+        </section>
+
+        {% include footer.html %}
+    </body>
+</html>

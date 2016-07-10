@@ -1,0 +1,172 @@
+/** Reset browser-default margin and padding, and
+ *  set overall color scheme.
+ */
+html, body {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: #060606;
+    color: #caceca;
+}
+
+
+/*
+ ***********************************************************
+ *  Index styles.
+ ***********************************************************
+ */
+section.index {
+    display: block;
+    margin: 1em auto;
+    padding: 2em 8em;
+}
+section.index h1 {
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-size: 12em;
+    font-weight: lighter;
+    font-family: monospace;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color: #caceca;
+    text-shadow: 0 0 0.1em #6adf6a;
+}
+section.index h4.boast {
+    display: block;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 0.1em;
+    font-weight: normal;
+    font-family: monospace;
+    text-align: center;
+}
+section.index h4.boast span.spacer {
+    color: #f00;
+    font-family: monospace;
+}
+
+nav.index {
+    display: block;
+    margin: 2em auto;
+    padding: 1em;
+    text-align: center;
+    font-family: monospace;
+}
+nav.index a {
+    display: inline-block;
+    margin: 0;
+    padding: 0 1em;
+    color: #a0a0a0;
+    font-size: 2em;
+}
+
+body.index footer {
+    display: block;
+    margin: 8em 0 0 0;
+    padding: 1em;
+    color: #a0a0a0;
+    font-size: 1em;
+    text-align: center;
+    font-family: monospace;
+}
+
+
+/*
+ ***********************************************************
+ *  Global styles.
+ ***********************************************************
+ */
+body footer {
+    display: block;
+    margin: 2em 0 0 0;
+    padding: 1em;
+    color: #a0a0a0;
+    font-size: 1em;
+    text-align: center;
+    font-family: monospace;
+}
+
+/** Navigation styles.
+ */
+nav {
+    display: block;
+    margin: 0 0 1em 0;
+    padding: 1em;
+    text-align: left;
+    font-family: monospace;
+}
+nav a {
+    display: inline-block;
+    margin: 0;
+    padding: 0 0.2em;
+    color: #80a080;
+    font-size: 1.25em;
+    text-decoration: none;
+}
+nav a:hover {
+    color: #a0f0a0;
+    text-decoration: underline;
+}
+nav span.spacer {
+    color: #f00;
+}
+
+/** Introduction manual "chapter" styles.
+ */
+.chapter {
+    display: block;
+    margin: 1em auto;
+    padding: 0;
+    width: 80%;
+    font-family: serif;
+    text-align: justify;
+}
+.chapter p {
+    display: block;
+    width: 75%;
+}
+.chapter p.abstract {
+    font-size: 1.8em;
+}
+.chapter p.summary {
+    font-size: 1.25em;
+}
+.chapter p.summary-first-part {
+    margin: 1em 0 0 0;
+    font-size: 1.25em;
+}
+.chapter p.summary-part {
+    margin: 0;
+    font-size: 1.25em;
+}
+.chapter p.summary-last-part {
+    margin: 0 0 1em 0;
+    font-size: 1.25em;
+}
+
+.chapter p.abstract em, .chapter p.summary em {
+    color: #d0d006;
+    font-style: normal;
+}
+
+.chapter a {
+    color: inherit;
+}
+
+/*  Note cast to the right side of the screen.
+ */
+.chapter p.note {
+    font-size: 1em;
+    width: 23%;
+    float: right;
+}
+.chapter p.note.for-summary, .chapter p.note.for-abstract {
+    margin: 0 0 1em 0;
+}
+
+.clear {
+    margin: 0;
+    padding: 0;
+    clear: both;
+}
