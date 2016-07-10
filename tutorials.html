@@ -50,6 +50,16 @@ layout: default
     -- both instructions take register index as an argument
     print 1
 
+    -- the 'izero' instruction creates an object representing integer 0 and
+    -- makes it available in a register
+    -- here, register 0 is used as it has special meaning to the VM - when a function
+    -- returns its return value is taken form the zeroeth register
+    izero 0
+
+    -- the 'return' instruction returns from the function, and pops its frame from the stack
+    -- all objects created inside the function are destroyed immediately
+    return
+
     -- functions end with .end
     .end
     {% endhighlight %}
