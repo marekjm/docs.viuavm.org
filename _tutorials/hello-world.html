@@ -1,0 +1,256 @@
+---
+number: 10
+title: "The Canonical Program: Hello World!"
+layout: default
+summary: >
+    One of the simplest progams one can write in Viua VM, the canonical first program written in a new language: the
+    "Hello World!".
+---
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="summary"> {{ page.summary }} </p>
+
+    <h3> Code organisation </h3>
+
+    <p> It is recommended to create a special directory for Viua tutorials, e.g. <code>~/projects/tutorials/viuavm</code> and
+    put tutorial code there.
+    This way you will neither litter your system, nor lose your code (as it will be sitting in a designated directory).
+    </p>
+</section>
+
+<section class="chapter">
+    <h2> Creating a Viua VM program </h2>
+
+    <p> First, open <code>main.asm</code> file your editor, and type the following code.
+    Comments provide brief explanations so that you will know why you are typing each element
+    of the program.
+    </p>
+
+    {% highlight lua linenos %}
+    -- functions begin with .function: <name>/<arity>
+    .function: main/0
+
+    -- this line is actually two instructions: 'echo' and 'strstore'
+    -- "parenthesized" instructions are unwrapped-up, meaning that the instruction
+    -- in the innermost parenthesis will be executed first
+    --
+    -- in this case, the 'strstore' will be executed first, and 'echo' second
+    echo (strstore 1 "Hello ")
+
+    -- this is equivalent to the previous line, only unwrapped (as seen by assembler)
+    ststore 1 "World"
+    echo 1
+
+    -- the 'strstore' instruction creates a string object, and makes it available in a register
+    -- both single quotes (') and double quotes (") can be used as string delimiters
+    -- there is no character type, characters are just one-sized strings
+    -- strings are plain ASCII (there is not Unicode support yet)
+    strstore 1 '!'
+
+    -- the 'print' instruction prints stringified object and a newline to the
+    -- standard output
+    -- the 'echo' instruction prints stringified object to the standard output, but
+    -- does not append the extra newline
+    -- both instructions take register index as an argument
+    print 1
+
+    -- the 'izero' instruction creates an object representing integer 0 and
+    -- makes it available in a register
+    -- here, register 0 is used as it has special meaning to the VM - when a function
+    -- returns its return value is taken form the zeroeth register
+    izero 0
+
+    -- the 'return' instruction returns from the function, and pops its frame from the stack
+    -- all objects created inside the function are destroyed immediately
+    return
+
+    -- functions end with .end
+    .end
+    {% endhighlight %}
+
+    <p> The next section will explain each step in more detail.
+    </p>
+</section>
+
+<section class="chapter">
+    <h2> Program structure </h2>
+
+    <p> There are some things you ought to observe when writing Viua VM programs.
+    First, every program is built from functions and instructions.
+    No instruction may appear outside of a function, so a function may be considered the smallest
+    builing block of a Viua VM program.
+    Functions are defined as follows:
+    </p>
+
+    {% highlight lua %}
+    -- function definitions begin with the `.function:` token followed by function signature
+    .function: foo/0
+
+        --
+        -- here is the function's body
+        -- inside a function only instructions are valid
+        -- functions cannot be nested
+        --
+
+        -- functions MUST end with the `return` instruction
+        return
+
+    -- function definitions end with the `.end` token
+    .end
+    {% endhighlight %}
+
+    <p> These two parts: <code>.function: foo/0</code> and <code>.end</code> (assembler directives) are
+    removed when the source is transformed into the executable form, they are there only for
+    the programer and the assembler.
+    Now, lets analyse a full example.
+    </p>
+
+    {% highlight lua linenos %}
+    .function: print_hello/0
+        strstore 1 "Hello World!"
+        print 1
+        return
+    .end
+    {% endhighlight %}
+
+    <h3> Function signature </h3>
+
+    <p> The first line begins the definition.
+    It's the <code>.function:</code> assembler directive beginning a function definition, followed
+    by <code>print_hello/0</code>, which is the function's signature.
+    </p>
+
+    {% highlight lua %}
+    .function: print_hello/0
+    {% endhighlight %}
+
+    <p>Function signatures are composed of two parts: the <em>name</em>, and the <em>arity</em>.
+    The "name" part of the signature is an alphanumeric string, beginning with either a letter or
+    an underscore, followed by zero or more letters, digits and underscores.
+    Second part of the signature is the "arity" which encodes the number of arguments the function takes.
+    It is a valuable information for programmer, and compiler.
+    Arity is separated from the name part by a slash.
+    </p>
+    <p> Here are some examples of valid function signatures:
+        <ul>
+            <li> <code>foo/0</code> </li>
+            <li> <code>bar/1</code> </li>
+            <li> <code>baz_bay/3</code> </li>
+            <li> <code>add2/1</code> </li>
+            <li> <code>Sherlock_Holmes/0</code> </li>
+        </ul>
+    </p>
+
+    <h3> Instructions </h3>
+
+    <p> Second line is the <code>strstore</code> instruction. </p>
+
+    {% highlight lua %}
+        strstore 1 "Hello World!"
+    {% endhighlight %}
+
+    <p> This instruction creates a string object with contents given between the quotes, and
+    makes it available using the register index, in this case - <code>1</code>.
+    The string object this instruction creates may be referenced by other instructions by giving
+    them the register index assiciated with it as an operand.
+    Let's consider a simple example:
+    </p>
+
+    {% highlight lua %}
+    -- `istore` instruction creates an integer object and
+    -- makes it available through a register index
+    -- create 23 and "put it inside" register 1
+    istore 1 23
+
+    -- create 19 and put it inside register 2
+    istore 2 19
+
+    -- add contents of register 2 to contents of register 2, and
+    -- make the result available through register 3
+    iadd 3 1 2
+    {% endhighlight %}
+
+    <p> In the last instruction the digits 1, 2 and 3 do not represent themselves; they represent register indexes.
+    </p>
+
+    <p> In instructions which may create new objects, the first operand is always the <em>target register</em>, i.e.
+    it is index of the register in which the result of the instruction will be stored.
+    This rule is introduced because it simplifies parsing, and makes it easier to remember which registers may be modified by
+    an instruction.
+    </p>
+    <p> Some instructions "modify" more than one register, and some modify none.
+    Not all instructions fall exactly into this scheme of target-first because sometimes it's not clear what is the
+    target.
+    Good rule of a thumb is: if an instruction writes, it always writes to the first operand.
+    As an example of an instruction that breaks this rule, take the second instruction of the program being analysed:
+    </p>
+
+    {% highlight lua %}
+        print 1
+    {% endhighlight %}
+
+    <p class="note"> One could argue that the print instruction technically performs a "write" - to the standard output. </p>
+    <p> <code>print</code> instruction does not write to a register - it reads from one, even though the index is its first operand.
+    Another such instruction is <code>echo</code> (present in the first program in this tutorial).
+    There are also instructions that do not take any register indexes as operands, or any operands at all.
+    First such instruction you encountered is:
+    </p>
+    <div class="clear"></div>
+
+    {% highlight lua %}
+        return
+    {% endhighlight %}
+
+    <p> It returns from a function.
+    It does not read any registers, it does not write to any registers, it does not do anything except signal that a function
+    finished execution, its call frame may be removed from stack, and control may be returned to the caller.
+    </p>
+
+    <p> The last line in the analysed example... </p>
+
+    {% highlight lua %}
+    .end
+    {% endhighlight %}
+
+    <p> ...tells the assembler that the function's body has eneded.
+    Function bodies always appear between <code>.function:</code> and <code>.end</code>.
+    No instructions may also appear outside of these two directives.
+    For example, below program is illegal:
+    </p>
+
+    {% highlight lua linenos %}
+    -- instructions cannot appear outside of functions
+    strstore 1 "Hello World!"
+
+    .function: f/0
+        print 1
+        return
+    .end
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Main function in executables </h2>
+
+    <p> Every program that will be directly executed by the VM <strong>MUST</strong> define a main
+    function (libraries are exempt from this rule because they are linked into other programs, and
+    thus executed "indirectly").
+    </p>
+</section>
+
+<section class="chapter">
+    <h2> Running a Viua VM program </h2>
+
+    <p> The sample program must be compiled before VM can execute it.
+    To compile and execute the program use the following commands:
+
+    {% highlight bash %}
+    $ vi hello.asm          # type the above code, save and exit
+    $ viua-asm hello.asm    # you may give -o <output> option to the assembler, to specify the output file
+    $                       # by default it is 'a.out'
+    $ viua-vm a.out         # execute the program
+    Hello World!
+    {% endhighlight %}
+</section>

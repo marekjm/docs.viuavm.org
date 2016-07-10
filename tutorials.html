@@ -13,66 +13,22 @@ layout: default
 </section>
 
 <section class="chapter">
-    <h1>Canonical program: Hello World!</h1>
+    <h1> {{ page.title }} </h1>
 
-    <p> This is the simplest program one can write in Viua VM, it just prints "Hello World!" to the standard output, and exits.
-
-    {% highlight lua linenos %}
-    -- functions begin with .function: <name>/<arity>
-    .function: main/0
-
-    -- this line is actually two instructions: 'echo' and 'strstore'
-    -- "parenthesized" instructions are unwrapped-up, meaning that the instruction
-    -- in the innermost parenthesis will be executed first
-    --
-    -- in this case, the 'strstore' will be executed first, and 'echo' second
-    echo (strstore 1 "Hello ")
-
-    -- this is equivalent to the previous line, only unwrapped (as seen by assembler)
-    ststore 1 "World"
-    echo 1
-
-    -- the 'strstore' instruction creates a string object, and makes it available in a register
-    -- both single quotes (') and double quotes (") can be used as string delimiters
-    -- there is no character type, characters are just one-sized strings
-    -- strings are plain ASCII (there is not Unicode support yet)
-    --
-    -- syntax of the 'strstore' instruction is as follows:
-    --
-    --  strstore <register-index> <quoted-string>
-    --
-    strstore 1 '!'
-
-    -- the 'print' instruction prints stringified object and a newline to the
-    -- standard output
-    -- the 'echo' instruction prints stringified object to the standard output, but
-    -- does not append the extra newline
-    -- both instructions take register index as an argument
-    print 1
-
-    -- the 'izero' instruction creates an object representing integer 0 and
-    -- makes it available in a register
-    -- here, register 0 is used as it has special meaning to the VM - when a function
-    -- returns its return value is taken form the zeroeth register
-    izero 0
-
-    -- the 'return' instruction returns from the function, and pops its frame from the stack
-    -- all objects created inside the function are destroyed immediately
-    return
-
-    -- functions end with .end
-    .end
-    {% endhighlight %}
+    <p class="note important-note"> If you are looking for more in-depth information, or want to just refresh your memory check
+    out the <a href="/manuals.html">manuals</a> directory.
     </p>
-
-    <p> The sample program must be compiled before VM can execute it.
-    To compile and execute the program use the following commands (assuming you compiled the VM, and are in the repository directory):
-
-    {% highlight bash %}
-    $ vi hello.asm                  # type the code from the previous step, save and exit
-    $ ./build/bin/vm/asm hello.asm  # you may give -o <output> option to the assembler, to specify the output file
-    $                               # by default it is 'a.out'
-    $ ./build/bin/vm/cpu a.out
-    Hello World!
-    {% endhighlight %}
+    <p class="abstract"> Below you can find tutorials for various aspects and features of Viua VM.
+    Tutorials are step-by-step guides, with comments and explanations.
+    A reasonable proficiency in programming is assumed, but no prior experience with Viua VM is expected.
+    </p>
+    <div class="clear"></div>
 </section>
+
+
+{% for art in site.tutorials | order: 'no' %}
+<section class="chapter">
+    <h2> <a href="{{ art.url }}">{{ art.title }}</a> </h2>
+    <p class="summary"> {{ art.summary }} </p>
+</section>
+{% endfor %}
