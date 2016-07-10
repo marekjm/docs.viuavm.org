@@ -169,5 +169,26 @@ id: manuals__install
     <p> Do not run the test suite manually; always use the <code>make test</code> or the <code>./scripts/test_quick</code> wrapper
     because they will setup required environment variables (e.g. <code>VIUAPATH</code>) for you.
     </p>
+</section>
 
+<section class="chapter">
+    <h1> Installing </h1>
+
+    <p> Installation of Viua is simple: <code>make install</code> should do the trick.
+    It will install Viua binaries to <code>/usr/local/bin</code>, the standard library to
+    <code>/usr/local/lib/viua/std</code>, and header files to <code>/usr/local/include/viua</code>.
+    Alternatively, Viua can be installed locally:
+
+    {% highlight bash %}
+    $ make PREFIX=/home/joe/.local install
+    $ viua-vm --version     # if this command works, Viua has been installed successfully
+    {% endhighlight %}
+    </p>
+
+    <p> If you choose to install in a non-standard location, you have to set the <code>VIUAPATH</code>
+    environment variable in your shell's rc file to let Viua know where to look for libraries.
+    The <code>VIUAPATH</code> is a typical PATH-type environment variable - a colon-separated list of
+    directories the VM will check when it looks for a library.
+    Example: <code>export VIUAPATH='/usr/local/software/viuavm:/home/joe/.local/viuavm/lib'</code>.
+    </p>
 </section>
