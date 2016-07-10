@@ -234,10 +234,65 @@ summary: >
 <section class="chapter">
     <h2> Main function in executables </h2>
 
-    <p> Every program that will be directly executed by the VM <strong>MUST</strong> define a main
-    function (libraries are exempt from this rule because they are linked into other programs, and
-    thus executed "indirectly").
+    <p class="summary"> Every program that will be directly executed by the
+    VM <strong>MUST</strong> define a main function.
     </p>
+
+    <p> If you tried compiling the example analysed in previous section, with the <code>print_hello/0</code> function,
+    assembler complained to you:
+    </p>
+
+    {% highlight bash %}
+    $ viua-asm print_hello.asm
+    print_hello.asm: error: main function is not defined
+    {% endhighlight %}
+
+    <p> The error is self-explanatory; main function was not defined in the source file you have tried to compile.
+    Technically, it <em>is</em> possible to produce an executable and link the main function in from a different compilation
+    unit, but for now assume that you must define main function in your main source file.
+    </p>
+
+    <p> In Viua, function can be overloaded based on their arity; main function is no exception.
+    There are three legal main function overloads: <code>main/0</code>, <code>main/1</code>, and <code>main/2</code>.
+    Each of them behaves exactly the same (they are all user-defined, must end with <code>return</code>), the differences are only
+    in the set of parameters each overload receives.
+    Suppose you compiled three programs, one for every overload of main function, and run them like this:
+    </p>
+
+    {% highlight bash %}
+    $ viua-vm program foo bar 42
+    {% endhighlight %}
+
+    <p> Depending on which overload you chose, Viua supplies the command line operands differently.
+    The <code>main/0</code> overload does not receive any parameters, as its arity states.
+    The <code>main/1</code> overload receives a single list of strings (with first string representing the name the program was
+    run with, and each subsequent string representing a command line operand).
+    The <code>main/2</code> overload receives two parameters: the first is a string representing the name the program was run with, and
+    the second is a list of strings (with each string representing a command line operand).
+    Below is a more graphical representation of the parameter distribution, based on the main function overload used.
+    Assume that the program was called as the previous snippet.
+    </p>
+
+    {% highlight lua %}
+    main/0 receives ()
+    main/1 receives (["program", "foo", "bar", "42"])
+    main/2 receives ("program", ["foo", "bar", "42"])
+    {% endhighlight %}
+
+    <p> Main functions have one requirement: the must end with the following sequence of instructions: </p>
+
+    <p class="note important-note">This requirement will be lifter in future version of the VM.</p>
+    {% highlight lua %}
+        -- some previous code...
+
+        izero 0
+        return
+    .end
+    {% endhighlight %}
+    <div class="clear"></div>
+
+    <p> This is neccessary to ensure that the main function provides a return value. </p>
+
 </section>
 
 <section class="chapter">
