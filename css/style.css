@@ -87,6 +87,7 @@ body footer {
     font-family: monospace;
 }
 
+
 /** Navigation styles.
  */
 nav {
@@ -111,6 +112,7 @@ nav a:hover {
 nav span.spacer {
     color: #f00;
 }
+
 
 /** Introduction manual "chapter" styles.
  */
@@ -169,4 +171,37 @@ nav span.spacer {
     margin: 0;
     padding: 0;
     clear: both;
+}
+
+
+/** Big, fat warnings.
+ */
+section.big-fat-warning, div.big-fat-warning {
+    display: block;
+    width: 90%;
+    margin: 1em auto;
+    padding: 1em;
+    border-radius: 0.25em;
+    background-color: #4f4f4f;
+}
+section.big-red-warning, div.big-red-warning {
+    background-color: #aa0000;
+    box-shadow: 0 0 2em #f00;
+}
+section.big-orange-warning, div.big-orange-warning {
+    background-color: #aa4e00;
+    box-shadow: 0 0 2em #aa4e00;
+}
+section.big-yellow-warning, div.big-yellow-warning {
+    background-color: #dada00;
+    box-shadow: 0 0 2em #ff0;
+}
+.big-fat-warning h1, .big-fat-warning p {
+    color: #fff;
+}
+.big-fat-warning a {
+    color: inherit;
+}
+.big-yellow-warning h1, .big-yellow-warning p {
+    color: #000;
 }
