@@ -292,20 +292,29 @@ summary: >
     <div class="clear"></div>
 
     <p> This is neccessary to ensure that the main function provides a return value. </p>
-
 </section>
 
 <section class="chapter">
     <h2> Running a Viua VM program </h2>
 
-    <p> The sample program must be compiled before VM can execute it.
-    To compile and execute the program use the following commands:
+    <p> Viua VM programs must be compiled before VM can execute them.
+    To compile and execute a program use the following commands:
+    </p>
 
     {% highlight bash %}
-    $ vi hello.asm          # type the above code, save and exit
-    $ viua-asm hello.asm    # you may give -o <output> option to the assembler, to specify the output file
+    $ viua-asm program.asm  # you may give -o <output> option to the assembler, to specify the output file
     $                       # by default it is 'a.out'
     $ viua-vm a.out         # execute the program
+    {% endhighlight %}
+
+    <p> The exmple program from the beginning of this tutorial, may be compiled and executed using the
+    following sequence of commands:
+    </p>
+
+    {% highlight bash %}
+    $ vi hello.asm          # type the code, save the file, and exit
+    $ viua-asm hello.asm    # turn source code into executable bytecode
+    $ viua-vm a.out         # run the program
     Hello World!
     {% endhighlight %}
 </section>
