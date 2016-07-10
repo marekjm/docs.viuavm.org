@@ -54,4 +54,15 @@ layout: default
     .end
     {% endhighlight %}
     </p>
+
+    <p> The sample program must be compiled before VM can execute it.
+    To compile and execute the program use the following commands (assuming you compiled the VM, and are in the repository directory):
+
+    {% highlight bash %}
+    $ vi hello.asm                  # type the code from the previous step, save and exit
+    $ ./build/bin/vm/asm hello.asm  # you may give -o <output> option to the assembler, to specify the output file
+    $                               # by default it is 'a.out'
+    $ ./build/bin/vm/cpu a.out
+    Hello World!
+    {% endhighlight %}
 </section>
