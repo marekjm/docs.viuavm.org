@@ -152,6 +152,15 @@ nav span.spacer {
     font-style: normal;
 }
 
+.chapter p > code {
+    padding: 2px;
+    color: #40cf40;
+    font-weight: bold;
+}
+.chapter p.note > code {
+    color: #000;
+}
+
 .chapter a {
     color: inherit;
 }
@@ -159,19 +168,30 @@ nav span.spacer {
 /*  Note cast to the right side of the screen.
  */
 .chapter p.note {
-    width: 23%;
-    margin: 0 0 1em 0;
+    width: 21%;
+    padding: 1%;
+    margin: -1% 0 0 0;
     font-size: 1em;
     float: right;
 }
 .chapter p.note.for-summary, .chapter p.note.for-abstract {
     margin: 0 0 1em 0;
 }
+.chapter p.note.important-note {
+    background-color: #afaf00;
+    color: #000;
+    box-shadow: 0 0 1em #ff0;
+}
 
 .clear {
     margin: 0;
     padding: 0;
     clear: both;
+}
+.clear-right {
+    margin: 0;
+    padding: 0;
+    clear: right;
 }
 
 
