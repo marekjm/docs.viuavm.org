@@ -11,3 +11,33 @@ layout: default
     sample Viua VM code (with comments).
     </p>
 </section>
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="note important-note"> If you are looking for introductory materials check
+    out the <a href="/tutorials.html">tutorials</a> directory.
+    </p>
+    <p class="abstract"> Below you can find manuals needed when writing software for Viua VM
+    written as articles of varying length, accompanied by code samples in Viua assembly and,
+    occasionally, other languages.
+    Manuals are thought as resources touching upon more advanced features of the VM, such as:
+    concurrency, message passing, dynamic dispatch, and watchdog process; they also elaborate on
+    VM internals and contain in-depth information about "how-and-why's" of discussed features.
+    </p>
+    <div class="clear"></div>
+
+    <h3> Intended audience </h3>
+    <p class="summary"> A reasonable proficiency in programming is assumed.
+    Prior experience with Viua VM (and, for some manuals, with C++) is expected.
+    Experience with *nix-like (Linux, *BSD, etc.) command line environment is expected.
+    </p>
+</section>
+
+
+{% for art in site.manuals | order: 'title' %}
+<section class="chapter">
+    <h2> <a href="{{ art.url }}">{{ art.title }}</a> </h2>
+    <p class="summary"> {{ art.summary }} </p>
+</section>
+{% endfor %}
