@@ -135,6 +135,10 @@ nav span.spacer {
     font-size: 2em;
     padding: 0 0 0 0.75em;
 }
+.chapter > h3 {
+    font-size: 1.75em;
+    padding: 0 0 0 0.8em;
+}
 
 .chapter p {
     display: block;
