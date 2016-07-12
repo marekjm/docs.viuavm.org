@@ -10,6 +10,7 @@ bugs_url: "https://github.com/marekjm/viuavm/issues"
 collections:
     manuals:
         output: true
+        title: Manuals
     tutorials:
         output: true
         title: Tutorials
