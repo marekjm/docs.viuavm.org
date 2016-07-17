@@ -1,0 +1,82 @@
+---
+title: Objects
+layout: default
+id: manuals__objects
+summary: >
+    This manual describes how classes and objects are built, and
+    how does object-orientation work in Viua VM.
+    Static versus dynamic method dispatch is discussed.
+---
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="abstract"> {{ page.summary }} </p>
+</section>
+
+<section class="big-fat-warning big-yellow-warning">
+    <h1> Incomplete </h1>
+
+    <p> This manual may be incomplete. Should anything be unclear, incomprehensible, or just plain wrong, please file a bug report. </p>
+</section>
+
+<section class="chapter">
+    <h1> Overview </h1>
+
+    <p class="summary"> Objects in Viua VM are just a key-value stores, with type.
+    Classes are descriptions that map method names to their implementing functions, and
+    are used for dynamic dispatch.
+    </p>
+
+    <p> Viua is a virtual machine, not a programming langauge, so one can argue that it is wrong to put the notion of "objects" and "classes" inside it,
+    that the VM should instead provide the primitives used to build objects inside the user code.
+    However, Viua does ship with a language - a kind of high-level assembly, which is a compilation target for higher level languages, but can be used
+    to program the VM directly.
+    </p>
+
+    <p> The assembly language provided by Viua is a very thin abstraction over VM's instruction set, that is, there is one-to-one mapping between the
+    source code and what the machine executes.
+    The instruction set provides simple primitives (and some more complex ones), which can be used to implement the behaviour required by user code.
+    These primitives include operations to create objects (plain key-value stores), and classes (type descriptions).
+    </p>
+
+    <p> Users are not forced to use the high-level primitives provided by the VM, and can roll their own instead (using the machine-provided ones to
+    implement them).
+    This manual describes objects and classes as implemented in the VM; this information can be used to implement different models of object orientation,
+    should such need arise.
+    </p>
+</section>
+
+<section class="chapter">
+    <h1> Classes and object </h1>
+
+    <p class="summary"> Viua provides two basic compound data types: <code>Vector</code>, and <code>Object</code>.
+    This manual discusses the <code>Object</code> type as it is the one used to build user-defined data types.
+    </p>
+
+    <h2> Classes </h2>
+
+    <p> In Viua, classes are maps between method names, and names of functions that implement them.
+    For example, a <code>Foo</code> class may provide a method <code>bar/2</code>, which is mapped to a function <code>baz/2</code>.
+    When the method <code>bar/2</code> is called on an object of type <code>Foo</code> the VM will check type of the object, look up description of the type,
+    see what function the dispatched method has been mapped to, and call this function.
+    This is what classes in Viua are at the most basic level: maps.
+    </p>
+
+    <p> Classes can also build hierarchies, and Viua implements multiple inheritance so that hierarchies can become quite involved;
+    the algorithm used for inheritance hierarchy linearisation is described later.
+    Inheritance works as one would expect it - classes lower in hierarchy can override methods (i.e. map different function to the same method name), and
+    when a method is not implemented in a derived class VM looks for it in base classes.
+    </p>
+
+    <p> Classes do not have to share a common root (a style some other VMs require), but this is also not prohibited.
+    Even though type hierarchies may be completely disconnected, every object responds to a set of basic methods (e.g. can provide its own type, can be
+    stringified, etc.).
+    </p>
+
+    <h2> Objects </h2>
+
+    <p> In Viua, objects are key-value stores where keys are strings, and values can be anything: functions, integers, strings, or other objects.
+    Objects also have associated class, used for dynamic dispatch.
+    </p>
+</section>
