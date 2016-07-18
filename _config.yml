@@ -3,6 +3,9 @@ description: Viua VM Docs - Viua virtual machine documentation directory
 title: Viua VM Docs
 url: "http://docs.viuavm.org"
 
+savannah_git_url: "http://git.savannah.gnu.org/cgit/viuavm.git/"
+savannah_anonymous_clone_url: "git://git.savannah.nongnu.org/viuavm.git"
+
 repository_url: "https://github.com/marekjm/viuavm"
 releases_url: "https://github.com/marekjm/viuavm/releases"
 bugs_url: "https://github.com/marekjm/viuavm/issues"

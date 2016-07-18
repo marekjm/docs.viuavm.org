@@ -16,17 +16,15 @@
             </p>
             <div class="clear"></div>
 
-            <p class="note"> Automatic C++ standard support detection is not available for Clang++. </p>
-            <p>
             {% highlight bash %}
-            $ git clone {{ site.repository_url }}
-            $ ./scripts/regenerate_cxxflags.sh  # optional: only for GCC, run only if you're not sure if your GCC supports C++14
-                                                # if this does not work, manually change CXX_STANDARD to c++11 in Makefile
-            $ make -j 4                         # make using at 4 threads to speed the process up a bit
-            $ ./scripts/test_quick              # perform quick test to see if everything works as it should
+            # create an anonymous, read-only clone
+            $ git clone --recursive --branch devel {{ site.savannah_anonymous_clone_url }}
+            $ cd viuavm
+            $ vi Makefile           # set CXX_STANDARD flag to c++11 or c++14 (recommended), depending on
+                                    # what your compiler supports
+            $ make                  # compile the code
+            $ ./scripts/test_quick  # perform quick test to see if everything works as it should
             {% endhighlight %}
-            </p>
-            <div class="clear"></div>
 
             <p> For more information see <a href="/manuals/install.html">installation instructions</a>.
         </div>
@@ -36,7 +34,7 @@
             <p> Viua VM is alpha software, and is undergoing constant change.
             The scope of code-breaking changes is kept under control on a best-effort basis, if something needs breaking it is being broken; privileges of alpha.
             </p>
-            <p> You can get the newest code <a href="{{ site.repository_url }}">on Github</a>. </p>
+            <p> You can get the newest code on <a href="{{ site.savannah_git_url }}">Savannah</a> or <a href="{{ site.repository_url }}">Github</a>. </p>
         </section>
 
         <section class="chapter">
