@@ -1,0 +1,187 @@
+---
+number: 20
+title: "Viua VM internals: message passing"
+layout: default
+id: manuals__viua_vm_internals__message_passing
+summary: >
+    Manual explaining the road that a message travels between the process
+    that sent it, and the destination process.
+---
+
+<section class="big-fat-warning big-orange-warning">
+    <h1> These docs are a mess! What's that? </h1>
+    <p> This documentation is inteneted to be accessible, and easy to follow.
+    However, what is easy and straightforward for a core developer, may not be that clear to a person from outside the project.
+    Please remember that this documentation is only a draft, and is in the process of being written.
+    </p>
+    <p> Thank you for your cooperation. </p>
+</section>
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="summary"> {{ page.summary }} </p>
+
+    <p> Viua VM does not implement shared-memory concurrency.
+    Each virtual process inside Viua is contained in its own environment, and
+    communicates with other processes using messages.
+    There are no locks, mutexes, condition variables, etc. at the user visible level, but
+    Viua uses such tools at the implementation level.
+    </p>
+
+    <p> This manual discusses both user-visible message passing tools provided as Viua opcodes and
+    methods of standard objects, as well as the implementation details of mentioned user-level tools.
+    </p>
+
+    <p> In the first part, the user-level message passing is explained.
+    The second part discusses implementation of provided user-level primitives.
+    </p>
+</section>
+
+<section class="chapter">
+    <h1> Part 1: user-level primitives </h1>
+
+    <p class="summary"> Four primitives are provided to programmers to use: a means to <em>spawn a process</em>,
+    to <em>join a process</em>, and to <em>send and receive messages</em>.
+    Each primitive is discussed in relevant section below.
+    </p>
+
+    <h2> Spawning processes </h2>
+
+    <p> Processes are spawned from functions.
+    Whenever a new process is spawned it needs a main function, i.e. the function that is the top-most function on
+    the call stack of the process.
+    </p>
+
+    {% highlight lua linenos %}
+    .function: fn_to_run_in_a_process/0
+        print (strstore 1 "Hello World!")
+        return
+    .end
+
+    .function: main/0
+        -- a frame is needed to spawn a process
+        -- it is used as a top-most frame on the stack of the newly spawned process
+        frame 0
+
+        -- `process` instruction puts a process handle inside the target register
+        process 1 fn_to_run_in_a_process/0
+    {% endhighlight %}
+
+    <p> Viua VM implements SMP, so on a machine with sufficient hardware resources (and on a VM that is compiled with
+    multiple VP schedulers) the two processes can run in parallel.
+    </p>
+
+    <h2> Joining processes </h2>
+
+    <p> A process can be joined with another process.
+    When process "A" joins process "B", process "A" is blocked until process "B" stops.
+    Stopping may mean that the process finished running, or has been terminated by a runaway exception.
+    If process "B" is terminated when process "A" joins it the exception is transferred to process "A", and
+    process "A" becomes responsible for handling it.
+    </p>
+
+    {% highlight lua linenos %}
+        -- `process` instruction puts a process handle inside the target register
+        process 1 a_long_running_operation/2
+
+        -- `join` puts return value of the main function of joined process in target register, or
+        -- throws an exception if joined process has been terminated
+        --
+        -- syntax: join <target-register> <process-handle>
+        -- target register 0 causes join instruction to drop return value and
+        -- just block until joined process stops
+        join 2 1
+    {% endhighlight %}
+
+    <h2> Sending messages </h2>
+
+    <p> To send a message to another process, a process needs a handle for the recipient of the message.
+    The handle may be passed as an argument to a function, or may arrive in a message.
+    </p>
+
+    {% highlight lua linenos %}
+        .name: 1 process_handle
+        .name: 2 message_to_send
+
+        -- to send a message through a process handle, the pass/2 method is used
+        frame ^[(param 0 process_handle) (param 1 message_to_send)]
+        msg 0 pass/2
+    {% endhighlight %}
+
+    <h2> Receiving messages </h2>
+
+    <p class="note important-note">As of version 0.8.3 there is no timeout mechanism to unblock a proces after a
+    specified time if no message is available.
+    </p>
+    <p> To receive a message <code>receive</code> instruction is used.
+    This operation may potentially block a process until a message arrives.
+    </p>
+
+    <div class="clear"></div>
+
+    {% highlight lua linenos %}
+        .name: 1 process_handle
+        .name: 2 received_message
+
+        -- the `receive` instruction is used to fetch messages that
+        -- were sent to the process
+        --
+        -- it is a potentially blocking operation
+        receive received_message process_handle
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h1> Part 2: implementation details </h1>
+
+    <p class="summary"> Messages are sent by a process, passed around inside the VM, and
+    then delievered and (usualy) fetched by their recipient process.
+    This section discusses internal mechanisms employed by Viua VM to implement message passing primitives
+    provided at the user-level.
+    </p>
+
+    <p> When a message is sent it is first delievered to the mailbox inside the CPU, assiciated with the recipient process.
+    Mailboxes are located inside the CPU as it is the only constant element in a running Viua.
+    There may be many VP and FFI schedulers executing in parallel, and
+    to avoid deadlocking due to unexpected combination of message sends, process joins, foreign calls etc. a greater part of
+    communication between virtual processes is synchronised by the CPU in message queues.
+    </p>
+
+    <p> When a process executes the <code>receive</code> instruction it receives first message available in its queue.
+    The scheduler fetches new messages (if there are any) from the CPU every time a process executes the <code>receive</code> instruction
+    to always present the process a complete queue with the most recent messages.
+    It may seem as a sub-optimal solution (if you have buffered messages in local queue, why fetch more from a resource that requires
+    locking?), but provides processes with the most accurate view of the incoming communications.
+    From the proces point of view there would be no difference if the messages were always fetched, or only if the queue was empty, so
+    this behaviour may change in the future.
+    </p>
+
+    <p> Sending messages works in a similar fashion to receiving.
+    Every time a process sends a message it obtains a lock inside the CPU and
+    delievers the message to an appropriate mailbox immediately.
+    This is because receiving process <em>knows</em> when it wants to receive, but sending process does not, so the VM tries to get
+    the message to the recipient as soon as possible after it is sent.
+    </p>
+
+    <h3> Message passing between processes on the same scheduler </h3>
+
+    <p class="note important-note"> This is not implemented as of version 0.8.3 </p>
+    <p> If a process sends a message to another process executing on the same scheduler the message is delievered immediately, without
+    passing through mailbox inside the CPU to avoid needless locking.
+    </p>
+    <div class="clear"></div>
+
+    <p> A special case of messaging inside a single scheduler are death messages.
+    These are the messages sent to watchdog process when a process is terminated by a runaway exception, and
+    no other process waits for its completion (i.e. no process executed <code>join</code> on it).
+    Since watchdog processes are always spawned per scheduler and cannot migrate between schedulers, they do not even have mailboxes
+    inside the CPU - all their messages are delievered directly.
+    </p>
+
+    <p> A good analogy is that cross-scheduler messages are like mail delivered by ordinary postal service, and
+    scheduler-internal messages are like mail delivered by courier service.
+    In the former case you have to go to the post office to fetch the mail (lock the mailbox inside the CPU, and
+    check if there are any messages), while in the latter case the mail delivered to you directly (without any need for locking).
+    </p>
+</section>
