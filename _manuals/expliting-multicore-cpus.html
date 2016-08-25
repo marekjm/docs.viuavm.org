@@ -1,0 +1,78 @@
+---
+title: Exploiting multicore CPUs
+layout: default
+id: manuals__expliting_multicore_cpus
+summary: >
+    This manual describes how to utilise all cores on multicore CPUs.
+---
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="abstract"> {{ page.summary }} </p>
+</section>
+
+<section class="big-fat-warning big-yellow-warning">
+    <h1> Incomplete </h1>
+
+    <p> This manual may be incomplete. Should anything be unclear, incomprehensible, or just plain wrong, please file a bug report. </p>
+</section>
+
+<section class="chapter">
+    <h1> Compile-time configuration </h1>
+
+    <p class="summary"> A default number of FFI and VP schedulers may be set at compilation time, and
+    Viua will use it for every launch.
+    </p>
+
+    <h2> Modification of default values </h2>
+
+    <p> There are two private static constant member variables in <code>CPU</code> class: <code>default_ffi_schedulers_limit</code> and
+    <code>default_vp_schedulers_limit</code>.
+    Change them, recompile and reinstall VM to adjust the default values.
+    </p>
+</section>
+
+<section class="chapter">
+    <h1> Launch-time configuration </h1>
+
+    <p class="summary"> The number of FFI and VP schedulers may be set at launch time, superseding the default values.
+    </p>
+
+    <h2> Configuration using environment variables </h2>
+
+    <p> There are two environment variables that control the number of FFI and VP schedulers: <code>VIUA_FFI_SCHEDULERS</code> and
+    <code>VIUA_VP_SCHEDULERS</code>.
+    They <strong>MUST</strong> contain positive, unsigned integers if they are set.
+    </p>
+
+    <p> Care must be taken to consider how many schedulers of each type should be launched; remeber to always measure before tweaking.
+    Also, overscheduling rarely does much good and may slow the program down.
+    </p>
+
+    <h3> <code>VIUA_FFI_SCHEDULERS</code> </h3>
+
+    <p> This environment controls the number of FFI schedulers.
+    Increase it if your program performs many FFI concurrent calls.
+    </p>
+
+    {% highlight shell %}
+    ~]$ viua-vm --info
+    0.8.3.49 [sched:ffi=2] [sched:vp=2]
+    ~]$ VIUA_FFI_SCHEDULERS=8 viua-vm --info
+    0.8.3.49 [sched:ffi=8] [sched:vp=2]
+    {% endhighlight %}
+
+    <h3> <code>VIUA_VP_SCHEDULERS</code> </h3>
+
+    <p> This environment controls the number of FFI schedulers.
+    Increase it if your program spawns many concurrent processes, but does not rely heavily on FFI.
+    </p>
+
+    {% highlight shell %}
+    ~]$ viua-vm --info
+    0.8.3.49 [sched:ffi=2] [sched:vp=2]
+    ~]$ VIUA_VP_SCHEDULERS=8 viua-vm --info
+    0.8.3.49 [sched:ffi=2] [sched:vp=8]
+    {% endhighlight %}
+</section>
