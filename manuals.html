@@ -31,7 +31,7 @@ layout: default
 </section>
 
 
-{% for art in site.manuals | order: 'title' %}
+{% for art in site.manuals %}
 <section class="chapter">
     <h2> <a href="{{ art.url }}">{{ art.title }}</a> </h2>
     <p class="summary"> {{ art.summary }} </p>
