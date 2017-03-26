@@ -3,7 +3,7 @@
     <meta name="description" content="{% if page.description %}{{ page.description | escape }}{% else %}{{ site.description | escape }}{% endif %}">
     <meta http-equiv="Content-Language" content="en">
 
-    <link rel="stylesheet" href="{{ "/css/style.css" | prepend: site.baseurl }}">
+    <!-- <link rel="stylesheet" href="{{ "/css/style.css" | prepend: site.baseurl }}"> -->
     <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
     <title>{% if page.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
