@@ -1,0 +1,30 @@
+---
+title: Instruction set
+layout: default
+---
+
+<section class="big-fat-warning big-red-warning">
+    <h1> Incomplete </h1>
+
+    <p> This section is embarassingly incomplete.
+    You can try looking at <a href="{{ site.repository_url }}/tree/devel/sample">samples</a> directory (containing roughly 4KLOC of
+    sample Viua VM code [with comments]) if you feel that something is missing.
+    </p>
+</section>
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="abstract">
+        Below you can find a complete Viua VM's instruction set reference.
+        Every instruction is described, its pre- and postconditions are listed, and some examples of usage are given.
+    </p>
+</section>
+
+
+{% for art in site.isa %}
+<section class="chapter">
+    <h2> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> </h2>
+    <p class="summary"> {{ art.summary }} </p>
+</section>
+{% endfor %}

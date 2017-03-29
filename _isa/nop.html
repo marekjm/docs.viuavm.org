@@ -1,0 +1,34 @@
+---
+title: nop
+layout: default
+summary: >
+    NOP - no operation.
+    This instruction does nothing.
+    It can be used as a filler instruction, or as a placeholder.
+---
+
+<section class="chapter">
+    <h1> <code> {{ page.title }} </code> </h1>
+
+    <p class="summary">
+        {{ page.summary }}
+        Executing a <code>nop</code> instruction does not change the state of the program, except for modifying the instruction pointer.
+    </p>
+</section>
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+.function: useless/0
+    nop  -- does nothing
+    return
+.end
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    <p> There are no usage examples for the <code>nop</code> instruction. </p>
+</section>

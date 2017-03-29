@@ -14,6 +14,9 @@ collections:
     manuals:
         output: true
         title: Manuals
+    isa:
+        output: true
+        title: Instruction set
     tutorials:
         output: true
         title: Tutorials
