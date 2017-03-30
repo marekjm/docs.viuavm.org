@@ -17,14 +17,98 @@ layout: default
 
     <p class="abstract">
         Below you can find a complete Viua VM's instruction set reference.
-        Every instruction is described, its pre- and postconditions are listed, and some examples of usage are given.
+        Every instruction is described and some examples of usage are given.
     </p>
 </section>
 
+<section class="chapter">
+    <h2> Notation </h2>
+
+    <p>
+        Several terms are used when describing the syntax and semantics of an instruction.
+        This section discusses their meaning.
+        Read this section before you study the ISA reference.
+    </p>
+
+    <h4> Literal numbers </h4>
+
+    <p> Numbers are written "without escaping", i.e. both 42 and 3.14 stand for themselves. </p>
+
+    <h4> Literal text (character strings) </h4>
+
+    <p> Text (character strings) is written inside double quotes, like this: "Hello World!". </p>
+
+    <h4> "r" operands </h4>
+
+    <p>
+        "r" operands are register operands, i.e. operands which encode index of a register.
+        They are written as small letter "r" followed by a non-negative integer value, e.g. 'r0', 'r1', and 'r42' are all valid "r" operands.
+    </p>
+
+    <p>
+        In source code, "r" operands are composed of three parts: sigil, index, and register-set specifier.
+        The sigil is either '%' meaning "return the value under specified index", or
+        '*' meaning "return the value the pointer located under specified index points to", or
+        '@' meaning "return the value inside a register indexed by the integer found in the register specified by the index".
+        "Register-set specifier" is a special value specifying from which register set the value for this operand should be fetched.
+    </p>
+
+    <p> Some examples of "r" operands in source code: </p>
+
+    {% highlight lua %}
+    -- take value from local register 1
+    %1 local
+
+    -- take value from static register 1
+    %1 static
+
+    -- take value from global register 1
+    %1 global
+
+    -- take value pointed-to by the pointer located in local register 1
+    *1 local
+
+    -- take value located in local register whose index is specified by the
+    -- integer stored in local register 1
+    @1 local
+    {% endhighlight %}
+
+    <h4> Void </h4>
+
+    <p>
+        A single "void" token represents a "void" operand, i.e. operand that represents "no-value-at-all".
+        It is used primarily when dropping return values from functions when writing <code>call</code> instructions.
+    </p>
+
+    {% highlight lua %}
+    -- call function example/0 and
+    -- drop the return value
+    call void example/0
+    {% endhighlight %}
+
+    <h4> Optional elements </h4>
+
+    <p> Optional elements are written enclosed by square brackets. For example: </p>
+
+    {% highlight lua %}
+    call [ void ] example/0
+    {% endhighlight %}
+
+    <p> means that the <code>void</code> is optional and may will be inserted automatically by the assembler when processing the source code. </p>
+
+    <h4> Other symbols </h4>
+
+    <p>
+        Other symbols used will be described whenever they are used.
+        They are written like this (without the quotes): "{some-descriptive-name}" .
+    </p>
+</section>
+
+<hr>
 
 {% for art in site.isa %}
 <section class="chapter">
-    <h2> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> </h2>
+    <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> </h3>
     <p class="summary"> {{ art.summary }} </p>
 </section>
 {% endfor %}
