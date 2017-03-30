@@ -1,12 +1,15 @@
 ---
 title: and
 layout: default
+isa_group: logic
 summary: >
-    and
+    Calculates boolean and of two values.
 ---
 
 <section class="chapter">
     <h1> <code> {{ page.title }} </code> </h1>
+
+    <p> <strong>Group</strong>: {{ page.isa_group }} </p>
 
     <p class="summary">
         {{ page.summary }}
@@ -17,7 +20,7 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+bool 
     {% endhighlight %}
 </section>
 

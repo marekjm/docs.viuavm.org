@@ -108,7 +108,7 @@ layout: default
 
 {% for art in site.isa %}
 <section class="chapter">
-    <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> </h3>
+    <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> ({{ art.isa_group }}) </h3>
     <p class="summary"> {{ art.summary }} </p>
 </section>
 {% endfor %}
