@@ -2,7 +2,7 @@
 title: istore
 layout: default
 summary: >
-    istore
+    istore - put a 64 bit signed integer into a register.
 ---
 
 <section class="chapter">
@@ -17,8 +17,16 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+    (0)     istore r0 i0
     {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Semantics </h2>
+
+    <p>
+        Stores a 64 bit signed integer in a register specified by "r0".
+    </p>
 </section>
 
 <section class="chapter">
@@ -26,13 +34,9 @@ nop
 
     {% highlight lua %}
 .function: example/0
+    -- store "42" in local register 1
+    istore %1 local 42
     return
 .end
     {% endhighlight %}
-</section>
-
-<section class="chapter">
-    <h2> Examples </h2>
-
-    <p> &nbsp; </p>
 </section>

@@ -2,7 +2,7 @@
 title: izero
 layout: default
 summary: >
-    izero
+    izero - put a 64 bit signed integer with the value of 0 into a register.
 ---
 
 <section class="chapter">
@@ -17,8 +17,16 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+izero r0
     {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Semantics </h2>
+
+    <p>
+        Stores a 64 bit signed integer with the value of 0 in a register specified by "r0".
+    </p>
 </section>
 
 <section class="chapter">
@@ -26,13 +34,15 @@ nop
 
     {% highlight lua %}
 .function: example/0
+    -- store "0" in local register 1
+    izero %1 local
     return
 .end
     {% endhighlight %}
 </section>
 
 <section class="chapter">
-    <h2> Examples </h2>
+    <h2> Notes </h2>
 
-    <p> &nbsp; </p>
+    <p> This instruction is equivallent to "<code>istore r0 0</code>". </p>
 </section>

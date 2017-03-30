@@ -2,23 +2,52 @@
 title: div
 layout: default
 summary: >
-    div
+    div - performs arithmetic division.
 ---
 
 <section class="chapter">
     <h1> <code> {{ page.title }} </code> </h1>
 
+    <p> <strong>Group</strong>: arithmetic </p>
+
     <p class="summary">
         {{ page.summary }}
+        Both operand numbers can be of different types, result is determined by result type specifier.
     </p>
 </section>
 
 <section class="chapter">
     <h2> Syntax </h2>
 
-    {% highlight lua %}
-nop
+    {% highlight text %}
+    (0)     div return-type-specifier r0 r1 r2
+    (1)     div return-type-specifier r0 r1 
     {% endhighlight %}
+
+    <p>
+        <code>(0)</code> is the canonical form.
+        Assembler expands <code>(1)</code> to "<code>div return-type-specifier r0 r0 r1".
+    </p>
+
+    {% highlight lua %}
+div int8 %1 local %2 local
+-- expands to...
+div int8 %1 local %1 local %2 local
+    {% endhighlight %}
+
+    <p> Operands "r1" and "r2" may use pointer dereference. </p>
+
+    <p> "return-type-specifier" may be one of: int8, int16, int32, int64, float32, float64. </p>
+</section>
+
+<section class="chapter">
+    <h2> Semantics </h2>
+
+    <p>
+        Divides number in "r1" by number in "r2" and stores the result in "r0".
+        Type of the result of said operation is determined by the "return-type-specifier".
+        Input operands are signed integers or floating point numbers.
+    </p>
 </section>
 
 <section class="chapter">
@@ -26,13 +55,19 @@ nop
 
     {% highlight lua %}
 .function: example/0
+    istore %1 local 126
+
+    -- store 3 in local register 1
+    istore %2 local 3
+
+    -- result will be stored in "%3 local"
+    -- its type will be a 64 bit signed integer
+    div int64 %3 local %1 local %2 local
+
+    -- prints "42" to stdout
+    print %3 local
+
     return
 .end
     {% endhighlight %}
-</section>
-
-<section class="chapter">
-    <h2> Examples </h2>
-
-    <p> &nbsp; </p>
 </section>
