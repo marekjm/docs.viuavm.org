@@ -1,22 +1,12 @@
 ---
 title: vinsert
-layout: default
+layout: isa_opcode
 isa_group: vectors
 canonical_form: 'vinsert {target-vector:r-operand} {source:r-operand} {index}'
 summary: >
     Moves a value into the vector at a given index.
     Elements after given index are shifted, starting with the element previously present at given index.
 ---
-
-<section class="chapter">
-    <h1> <code> {{ page.title }} </code> </h1>
-
-    <p> <strong>Group</strong>: {{ page.isa_group }} </p>
-
-    <p class="summary">
-        {{ page.summary }}
-    </p>
-</section>
 
 <section class="chapter">
     <h2> Syntax </h2>

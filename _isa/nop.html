@@ -1,23 +1,13 @@
 ---
 title: nop
-layout: default
+layout: isa_opcode
 isa_group: misc
 canonical_form: 'nop'
 summary: >
     Does nothing.
     It can be used as a filler instruction, or as a placeholder.
+    Executing a <code>nop</code> instruction does not change the state of the program, except for modifying the instruction pointer.
 ---
-
-<section class="chapter">
-    <h1> <code> {{ page.title }} </code> </h1>
-
-    <p> <strong>Group</strong>: {{ page.isa_group }} </p>
-
-    <p class="summary">
-        {{ page.summary }}
-        Executing a <code>nop</code> instruction does not change the state of the program, except for modifying the instruction pointer.
-    </p>
-</section>
 
 <section class="chapter">
     <h2> Syntax </h2>

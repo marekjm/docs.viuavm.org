@@ -1,27 +1,17 @@
 ---
 title: capture
-layout: default
+layout: isa_opcode
 isa_group: closures
 canonical_form: 'capture {affected-closure:r-operand} {target-register-inside-closure:index} {source:r-operand}'
 summary: >
     Captures a reference to a value for use inside a closure.
+    References are transparent to user-code, and are automatically resolved by the runtime.
+    Using references implies a switch from scope-based resource management into reference-counting scheme; the switch is done on a per-value basis.
 related_instructions:
     - capturecopy
     - capturemove
     - closure
 ---
-
-<section class="chapter">
-    <h1> <code> {{ page.title }} </code> </h1>
-
-    <p> <strong>Group</strong>: {{ page.isa_group }} </p>
-
-    <p class="summary">
-        {{ page.summary }}
-        References are transparent to user-code, and are automatically resolved by the runtime.
-        Using references implies a switch from scope-based resource management into reference-counting scheme; the switch is done on a per-value basis.
-    </p>
-</section>
 
 <section class="chapter">
     <h2> Syntax </h2>
