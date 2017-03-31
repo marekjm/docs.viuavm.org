@@ -43,6 +43,8 @@ layout: default
     <p>
         "r" operands are register operands, i.e. operands which encode index of a register.
         They are written as small letter "r" followed by a non-negative integer value, e.g. 'r0', 'r1', and 'r42' are all valid "r" operands.
+        Semantically, "r" operands evaluate to direct values, or - in case of pointer dereference - values pointed
+        to by pointers held in their respective registers.
     </p>
 
     <p>
@@ -56,19 +58,19 @@ layout: default
     <p> Some examples of "r" operands in source code: </p>
 
     {% highlight lua %}
-    -- take value from local register 1
+    -- evaluates to the value from local register 1
     %1 local
 
-    -- take value from static register 1
+    -- evaluates to the value from static register 1
     %1 static
 
-    -- take value from global register 1
+    -- evaluates to the value from global register 1
     %1 global
 
-    -- take value pointed-to by the pointer located in local register 1
+    -- evaluates to the value pointed-to by the pointer located in local register 1
     *1 local
 
-    -- take value located in local register whose index is specified by the
+    -- evaluates to the value located in local register whose index is specified by the
     -- integer stored in local register 1
     @1 local
     {% endhighlight %}
@@ -100,7 +102,7 @@ layout: default
 
     <p>
         Other symbols used will be described whenever they are used.
-        They are written like this (without the quotes): "{some-descriptive-name}" .
+        They are written like this (without the quotes): "{some-descriptive-name}" or "{some-descriptive-name:operand-type}".
     </p>
 </section>
 
