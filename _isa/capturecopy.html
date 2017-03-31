@@ -2,7 +2,7 @@
 title: capturecopy
 layout: default
 isa_group: closures
-canonical_form: 'capturecopy
+canonical_form: 'capturecopy {affected-closure:r-operand} {target-register-inside-closure:index} {source:r-operand}'
 summary: >
     Captures copy of a value for use inside a closure.
 ---
@@ -21,7 +21,7 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+    (0)     {{ page.canonical_form }}
     {% endhighlight %}
 </section>
 

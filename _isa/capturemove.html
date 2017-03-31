@@ -2,7 +2,7 @@
 title: capturemove
 layout: default
 isa_group: closures
-canonical_form: 
+canonical_form: 'capturemove {affected-closure:r-operand} {target-register-inside-closure:index} {source:r-operand}'
 summary: >
     Moves a value from surrounding scope into a closure.
 ---
@@ -21,7 +21,7 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+    (0)     {{ page.canonical_form }}
     {% endhighlight %}
 </section>
 

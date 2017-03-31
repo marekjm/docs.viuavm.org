@@ -2,7 +2,7 @@
 title: capture
 layout: default
 isa_group: closures
-canonical_form: 
+canonical_form: 'capture {affected-closure:r-operand} {target-register-inside-closure:index} {source:r-operand}'
 summary: >
     Captures a reference to a value for use inside a closure.
 ---
@@ -23,7 +23,7 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+    (0)     {{ page.canonical_form }}
     {% endhighlight %}
 </section>
 
