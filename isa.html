@@ -111,6 +111,11 @@ layout: default
 {% for art in sorted_isa %}
 <section class="chapter">
     <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> <small>(group: <em>{{ art.isa_group }}</em>)</small> </h3>
+
     <p class="summary"> {{ art.summary }} </p>
+
+    {% if art.canonical_form %}
+    <p> Canonical form: <code>{{ art.canonical_form }}</code> </p>
+    {% endif %}
 </section>
 {% endfor %}
