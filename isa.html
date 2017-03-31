@@ -106,16 +106,35 @@ layout: default
 
 <hr>
 
+<style>
+.indent {
+    margin-left: 2%;
+}
+</style>
+
 {% assign sorted_isa = site.isa | sort:"isa_group" %}
-
 {% for art in sorted_isa %}
+
+{% assign current_isa_group = art.isa_group %}
+
+{% if current_isa_group != previous_isa_group %}
+{% unless forloop.first %}
+<hr>
+{% endunless %}
+<h2> Opcode group: {{ art.isa_group }} </h2>
+{% endif %}
+
 <section class="chapter">
-    <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> <small>(group: <em>{{ art.isa_group }}</em>)</small> </h3>
+    <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code></h3>
 
-    <p class="summary"> {{ art.summary }} </p>
+    <div class="indent">
+        <p class="summary"> {{ art.summary }} </p>
 
-    {% if art.canonical_form %}
-    <p> Canonical form: <code>{{ art.canonical_form }}</code> </p>
-    {% endif %}
+        {% if art.canonical_form %}
+        <p> <em>Canonical form</em>: <code>{{ art.canonical_form }}</code> </p>
+        {% endif %}
+    </div>
 </section>
+
+{% assign previous_isa_group = current_isa_group %}
 {% endfor %}
