@@ -110,7 +110,7 @@ layout: default
 
 <style>
 .indent {
-    margin-left: 2%;
+    margin-left: 1%;
 }
 </style>
 
@@ -120,13 +120,10 @@ layout: default
 {% assign current_isa_group = art.isa_group %}
 
 {% if current_isa_group != previous_isa_group %}
-{% unless forloop.first %}
-<hr>
-{% endunless %}
 <h2> Opcode group: {{ art.isa_group }} </h2>
 {% endif %}
 
-<section class="chapter">
+<section class="chapter indent">
     <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code></h3>
 
     <div class="indent">
