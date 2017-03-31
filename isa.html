@@ -38,24 +38,24 @@ layout: default
 
     <p> Text (character strings) is written inside double quotes, like this: "Hello World!". </p>
 
-    <h4> "r" operands </h4>
+    <h4> R-operands </h4>
 
     <p>
-        "r" operands are register operands, i.e. operands which encode index of a register.
+        R-operands are register operands, i.e. operands which encode index of a register.
         They are written as small letter "r" followed by a non-negative integer value, e.g. 'r0', 'r1', and 'r42' are all valid "r" operands.
-        Semantically, "r" operands evaluate to direct values, or - in case of pointer dereference - values pointed
+        Semantically, r-operands evaluate to direct values, or - in case of pointer dereference - values pointed
         to by pointers held in their respective registers.
     </p>
 
     <p>
-        In source code, "r" operands are composed of three parts: sigil, index, and register-set specifier.
-        The sigil is either '%' meaning "return the value under specified index", or
-        '*' meaning "return the value the pointer located under specified index points to", or
-        '@' meaning "return the value inside a register indexed by the integer found in the register specified by the index".
+        In source code, r-operands are composed of three parts: sigil, index, and register-set specifier.
+        The sigil is either '%' meaning "the value under specified index", or
+        '*' meaning "the value the pointer located under specified index points to", or
+        '@' meaning "the value inside a register indexed by the integer found in the register specified by the index".
         "Register-set specifier" is a special value specifying from which register set the value for this operand should be fetched.
     </p>
 
-    <p> Some examples of "r" operands in source code: </p>
+    <p> Some examples of r-operands in source code: </p>
 
     {% highlight lua %}
     -- evaluates to the value from local register 1
@@ -74,6 +74,14 @@ layout: default
     -- integer stored in local register 1
     @1 local
     {% endhighlight %}
+
+    <h4> Indexes </h4>
+
+    <p>
+        Some instructions, for example "arg", require an "index" operand.
+        Index operands are a written as a percent sign followed by a non-negative integer and specify register indexes.
+        For example: <code>%1</code> is an index operand, but <code>%1 local</code> is not (it is an r-operand).
+    </p>
 
     <h4> Void </h4>
 
