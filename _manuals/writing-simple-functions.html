@@ -1,0 +1,53 @@
+---
+number: 1
+title: "Writing simple functions"
+layout: default
+id: manuals__writing_simple_functions
+summary: >
+    An overview of the function definition syntax, function call syntax and semantics.
+---
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="summary">
+        {{ page.summary }}
+    </p>
+
+    {% highlight lua %}
+-- File: writing_simple_functions.asm
+
+.function: hello/1
+    strstore %1 "Hello, "
+    arg %2 %0
+    strstore %3 "!"
+
+    echo %1
+    echo %2
+    echo %3
+
+    return
+.end
+
+.function: hello_world/0
+    frame ^[(strstore %1 "World")]
+    call void hello/1
+
+    return
+.end
+
+.function: main/0
+    strstore %1 "Joe"
+
+    frame %1
+    pamv %0 %1
+    call void hello/1
+
+    frame %0
+    call void hello_world/0
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+</section>
