@@ -20,8 +20,17 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-bool 
+    (0)     and r0 r1 r2
     {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Semantics </h2>
+
+    <p>
+        Calculates Boolean "and" of operands from r1 and r2, and stores the result in r0.
+        Operands in r1 and r2 do not have to be Boolean values and can be values of any type.
+    </p>
 </section>
 
 <section class="chapter">
@@ -29,6 +38,12 @@ bool
 
     {% highlight lua %}
 .function: example/0
+    izero %1 local      -- zero is considered false
+    istore %2 local 1   -- one is considered true
+
+    -- local register 3 now contains true value
+    and %3 local %1 local %2 local
+
     return
 .end
     {% endhighlight %}
