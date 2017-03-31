@@ -5,6 +5,10 @@ isa_group: closures
 canonical_form: 'capturemove {affected-closure:r-operand} {target-register-inside-closure:index} {source:r-operand}'
 summary: >
     Moves a value from surrounding scope into a closure.
+related_instructions:
+    - capturecopy
+    - capture
+    - closure
 ---
 
 <section class="chapter">
@@ -33,14 +37,4 @@ summary: >
     return
 .end
     {% endhighlight %}
-</section>
-
-<section class="chapter">
-    <h2> Related instructions </h2>
-
-    <p>
-        <a href="/isa/capturecopy.html">capturecopy</a>,
-        <a href="/isa/capture.html">capture</a>,
-        <a href="/isa/closure.html">closure</a>.
-    </p>
 </section>

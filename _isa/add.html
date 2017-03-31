@@ -5,6 +5,10 @@ isa_group: arithmetic
 canonical_form: 'add {numeric-type-specifier} {output:r-operand} {lhs:r-operand} {rhs:r-operand}'
 summary: >
     Performs arithmetic addition.
+related_instructions:
+    - sub
+    - mul
+    - div
 ---
 
 <section class="chapter">
@@ -73,14 +77,4 @@ add int8 %1 local %1 local %2 local
     return
 .end
     {% endhighlight %}
-</section>
-
-<section>
-    <h2> Related instructions </h2>
-
-    <p>
-        <a href="/isa/sub.html">sub</a>,
-        <a href="/isa/mul.html">mul</a>,
-        <a href="/isa/div.html">div</a>.
-    </p>
 </section>

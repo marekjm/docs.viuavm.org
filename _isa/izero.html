@@ -5,6 +5,8 @@ isa_group: arithmetic
 canonical_form: 'izero {:r-operand}'
 summary: >
     Puts a 64 bit signed integer with the value of 0 into a register.
+related_instructions:
+    - istore
 ---
 
 <section class="chapter">
@@ -49,10 +51,4 @@ izero r0
     <h2> Notes </h2>
 
     <p> This instruction is equivallent to "<code>istore r0 0</code>". </p>
-
-    <h2> Related instructions </h2>
-
-    <p>
-        <a href="/isa/istore.html">istore</a>.
-    </p>
 </section>

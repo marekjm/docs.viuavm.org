@@ -1,21 +1,19 @@
 ---
 title: call
-layout: default
+layout: isa_opcode
 isa_group: calls
 canonical_form: 'call {output:r-operand|void} {function-name:atom|r-operand}'
 summary: >
     Calls a function.
+related_instructions:
+    - frame
+    - param
+    - pamv
+    - arg
+    - tailcall
+    - return
+    - process
 ---
-
-<section class="chapter">
-    <h1> <code> {{ page.title }} </code> </h1>
-
-    <p> <strong>Group</strong>: {{ page.isa_group }} </p>
-
-    <p class="summary">
-        {{ page.summary }}
-    </p>
-</section>
 
 <section class="chapter">
     <h2> Syntax </h2>
@@ -33,19 +31,4 @@ nop
     return
 .end
     {% endhighlight %}
-</section>
-
-<section class="chapter">
-    <h2> Related instructions </h2>
-
-    <p>
-        <a href="/isa/frame.html">frame</a>,
-
-        <a href="/isa/param.html">param</a>,
-        <a href="/isa/pamv.html">pamv</a>,
-        <a href="/isa/arg.html">arg</a>,
-        <a href="/isa/tailcall.html">tailcall</a>,
-        <a href="/isa/return.html">return</a>,
-        <a href="/isa/process.html">process</a>.
-    </p>
 </section>
