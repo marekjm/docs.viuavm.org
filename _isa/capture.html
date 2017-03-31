@@ -3,7 +3,7 @@ title: capture
 layout: default
 isa_group: closures
 summary: >
-    capture
+    Captures a reference to a value for use inside a closure.
 ---
 
 <section class="chapter">
@@ -13,6 +13,8 @@ summary: >
 
     <p class="summary">
         {{ page.summary }}
+        References are transparent to user-code, and are automatically resolved by the runtime.
+        Using references implies a switch from scope-based resource management into reference-counting scheme; the switch is done on a per-value basis.
     </p>
 </section>
 
