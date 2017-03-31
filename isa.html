@@ -106,9 +106,11 @@ layout: default
 
 <hr>
 
-{% for art in site.isa %}
+{% assign sorted_isa = site.isa | sort:"isa_group" %}
+
+{% for art in sorted_isa %}
 <section class="chapter">
-    <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> ({{ art.isa_group }}) </h3>
+    <h3> <code> <a href="{{ art.url }}">{{ art.title }}</a> </code> <small>(group: <em>{{ art.isa_group }}</em>)</small> </h3>
     <p class="summary"> {{ art.summary }} </p>
 </section>
 {% endfor %}
