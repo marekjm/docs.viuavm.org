@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    {% include head.html %}
+
+    <body>
+        {% include navigation.html %}
+
+        <section class="chapter">
+            <h1> <code> {{ page.title }} </code> </h1>
+
+            <p> <strong>Group</strong>: {{ page.isa_group }} </p>
+
+            <p class="summary">
+                {{ page.summary }}
+            </p>
+        </section>
+
+        {{ content }}
+
+        {% if page.related_instructions %}
+            <section class="chapter">
+                <h2> Related instructions </h2>
+
+                <p>
+                {% for ri in page.related_instructions %}
+                <a href="/isa/{{ ri }}.html">{{ ri }}</a>{% if forloop.last %}.{% else %},{% endif %}
+                {% endfor %}
+                </p>
+            </section>
+        {% endif %}
+
+        <hr>
+
+        {% include footer.html %}
+    </body>
+</html>
