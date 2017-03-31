@@ -2,9 +2,10 @@
 title: vinsert
 layout: default
 isa_group: vectors
-canonical_form: 
+canonical_form: 'vinsert {target-vector:r-operand} {source:r-operand} {index}'
 summary: >
-    Inserts a value into the vector under an index.
+    Moves a value into the vector at a given index.
+    Elements after given index are shifted, starting with the element previously present at given index.
 ---
 
 <section class="chapter">
