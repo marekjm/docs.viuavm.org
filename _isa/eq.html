@@ -28,7 +28,28 @@ nop
     <h2> Examples </h2>
 
     {% highlight lua %}
-.function: example/0
+.function: is_answer_correct/1
+    -- store correct answer
+    istore %1 local 42
+
+    -- fetch first parameter and
+    -- store it in local register 2
+    arg %2 local %0
+
+    -- check if expected answer and
+    -- received answer are equal
+    eq %3 local %1 local %2 local
+
+    -- if local register 3 contains true value jump +1 instruction, otherwise jump +3 instructions
+    if %3 local +1 +3
+    strstore %4 local "answer is correct"       -- this is '+1' branch, one instruction further than if
+    -- jump +2 instructions, to the 'print' instruction
+    jump +2
+    strstore %4 local "answer is not correct"   -- this is '+3' branch, three instructions further than if
+
+    -- print the message
+    print %4 local
+
     return
 .end
     {% endhighlight %}
