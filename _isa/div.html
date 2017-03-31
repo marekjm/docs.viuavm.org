@@ -22,13 +22,13 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight text %}
-    (0)     div return-type-specifier r0 r1 r2
-    (1)     div return-type-specifier r0 r1 
+    (0)     div numeric-type-specifier r0 r1 r2
+    (1)     div numeric-type-specifier r0 r1 
     {% endhighlight %}
 
     <p>
         <code>(0)</code> is the canonical form.
-        Assembler expands <code>(1)</code> to "<code>div return-type-specifier r0 r0 r1".
+        Assembler expands <code>(1)</code> to "<code>div numeric-type-specifier r0 r0 r1".
     </p>
 
     {% highlight lua %}
@@ -39,7 +39,7 @@ div int8 %1 local %1 local %2 local
 
     <p> Operands "r1" and "r2" may use pointer dereference. </p>
 
-    <p> "return-type-specifier" may be one of: int8, int16, int32, int64, float32, float64. </p>
+    <p> "numeric-type-specifier" may be one of: int8, int16, int32, int64, float32, float64. </p>
 </section>
 
 <section class="chapter">
@@ -47,7 +47,7 @@ div int8 %1 local %1 local %2 local
 
     <p>
         Divides number in "r1" by number in "r2" and stores the result in "r0".
-        Type of the result of said operation is determined by the "return-type-specifier".
+        Type of the result of said operation is determined by the "numeric-type-specifier".
         Input operands are signed integers or floating point numbers.
     </p>
 </section>
