@@ -11,7 +11,7 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+    (0)     {{ page.canonical_form }}
     {% endhighlight %}
 </section>
 
@@ -20,6 +20,12 @@ nop
 
     {% highlight lua %}
 .function: example/0
+    -- spawn a new process
+    frame %0
+    process %1 local do_someting/0
+
+    join %2 local %1 local
+
     return
 .end
     {% endhighlight %}
