@@ -24,6 +24,14 @@ related_instructions:
 
     {% highlight lua %}
 .function: example/0
+    -- receiver
+    arg %1 local %0
+
+    frame %0
+    call %2 local produce/0
+
+    send %1 local %2 local
+
     return
 .end
     {% endhighlight %}
