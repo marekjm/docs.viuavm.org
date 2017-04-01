@@ -15,7 +15,7 @@ related_instructions:
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+    (0)     {{ page.canonical_form }}
     {% endhighlight %}
 </section>
 
@@ -24,6 +24,13 @@ nop
 
     {% highlight lua %}
 .function: example/0
+    -- save PID of this process to local register 1
+    self %1 local
+
+    -- spawn a new process that takes the just-obtained PID as an argument
+    frame ^[(pamv %0 %1 local)]
+    process %1 local new_process/0
+
     return
 .end
     {% endhighlight %}
