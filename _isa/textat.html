@@ -1,0 +1,38 @@
+---
+title: textat
+layout: isa_opcode
+isa_group: text
+canonical_form: 'textat {result-register} {string-register} {index-register}'
+summary: >
+    Return copy of the character at a given index in text.
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+    {{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: main/0
+    .name: %iota hello_world
+    text %hello_world local "Hello World!"
+
+    .name: %iota index
+    istore %index local 6
+
+    .name: %iota got_character
+    textat %got_character local %hello_world local %index local
+
+    print %got_character local
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+</section>

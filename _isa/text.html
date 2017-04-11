@@ -1,0 +1,33 @@
+---
+title: text
+layout: isa_opcode
+isa_group: text
+canonical_form: 'text {destination:r-operand} "{utf8-content}"'
+summary: >
+    Puts a text into a register.
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+    {{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: main/0
+    text %1 local "Hello World!"
+    text %2 local "Adieu World!"
+
+    texteq %3 local %1 local %2 local
+    print %3 local
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+</section>

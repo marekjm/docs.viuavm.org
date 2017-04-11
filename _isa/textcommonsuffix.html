@@ -1,0 +1,33 @@
+---
+title: textcommonsuffix
+layout: isa_opcode
+isa_group: text
+canonical_form: 'textcommonsuffix {result-register} {lhs-string-register} {rhs-string-register}'
+summary: >
+    Puts a string into a register.
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+    {{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: main/0
+    text (.name: %iota hello_world) local "Hello World!"
+    text (.name: %iota goodbye_world) local "Goodbye World!"
+
+    textcommonsuffix (.name: %iota common_suffix) local %hello_world local %goodbye_world local
+    print %common_suffix local
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+</section>

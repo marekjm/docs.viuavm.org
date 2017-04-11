@@ -1,0 +1,33 @@
+---
+title: textcommonprefix
+layout: isa_opcode
+isa_group: text
+canonical_form: 'textcommonprefix {result-register} {lhs-string-register} {rhs-string-register}'
+summary: >
+    Return length of common prefix of two text values.
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+    {{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: main/0
+    text (.name: %iota hello_joe) local "Hello Joe!"
+    text (.name: %iota hello_robert) local "Hello Robert!"
+
+    textcommonprefix (.name: %iota common_prefix) local %hello_joe local %hello_robert local
+    print %common_prefix local
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+</section>

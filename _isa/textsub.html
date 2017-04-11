@@ -1,0 +1,36 @@
+---
+title: textsub
+layout: isa_opcode
+isa_group: text
+canonical_form: 'textsub {result-register} {string-register} {begin-index-register} {end-index:register|void}'
+summary: >
+    Return a copy of a part of the given text between given indexes.
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+    {{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: main/0
+    text (.name: %iota hello_world) local "Hello World!"
+    print %hello_world local
+
+    istore (.name: %iota first_index) local 0
+    istore (.name: %iota last_index) local 6
+
+    textsub (.name: %iota hello) local %hello_world local %first_index local %last_index local
+    print %hello local
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+</section>

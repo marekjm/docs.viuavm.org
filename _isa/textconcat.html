@@ -1,0 +1,33 @@
+---
+title: textconcat
+layout: isa_opcode
+isa_group: text
+canonical_form: 'textconcat {result-register} {lhs-string-register} {rhs-string-register}'
+summary: >
+    Concatenate two text values. Creates a copy of each text value.
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+    {{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: main/0
+    text (.name: %iota hello) local "Hello "
+    text (.name: %iota world) local "World!"
+
+    textconcat (.name: %iota hello_world) local %hello local %world local
+    print %hello_world local
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+</section>

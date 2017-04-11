@@ -1,0 +1,36 @@
+---
+title: textlength
+layout: isa_opcode
+isa_group: text
+canonical_form: 'textlength {result-register} {string-register}'
+summary: >
+    Return length of a given text value (in characters).
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+    {{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: main/0
+    .name: %iota hello_world
+
+    text %hello_world local "Hello World!"
+    print (textlength %iota local %hello_world local)
+
+    -- "Witaj Świecie!" means "Hello World!" in Polish
+    text %hello_world local "Witaj Świecie!"
+    print (textlength %iota local %hello_world local)
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+</section>
