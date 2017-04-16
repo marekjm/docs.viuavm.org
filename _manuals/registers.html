@@ -95,5 +95,14 @@ summary: >
             If a function is called inside a new process then it receives a new static register set that is empty.
             Checking for empty registers can be done using the <code>isnull</code> instruction.
         </p>
+
+        <p>
+            The user program has access only to the static register set of the function function that is currently being executed.
+            This means that function <code>foo/0</code> does not have access to static registers of function <code>bar/0</code>.
+        </p>
+
+        <p>
+            Capacity of static register sets is currently fixed at 16 registers.
+        </p>
     </section>
 </section>
