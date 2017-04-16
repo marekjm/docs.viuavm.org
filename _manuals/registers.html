@@ -78,4 +78,22 @@ summary: >
             Capacity of local register sets is limited to 4'294'967'296 (2^32) registers.
         </p>
     </section>
+
+    <section>
+        <h2> Static register set </h2>
+
+        <p>
+            Static register set's lifetime is bound to a process inside which it has been spawned.
+            Static register sets are assigned per-function and are local to a single process.
+            That means that if function <code>foo/0</code> inside process A puts <code>42</code> in first static register, the
+            same function <code>foo/0</code> inside process B will not see that value inside its first static register.
+        </p>
+
+        <p>
+            User functions should always check if their static registers are initialised because there is no guarantee that
+            they will be.
+            If a function is called inside a new process then it receives a new static register set that is empty.
+            Checking for empty registers can be done using the <code>isnull</code> instruction.
+        </p>
+    </section>
 </section>
