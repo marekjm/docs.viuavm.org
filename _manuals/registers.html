@@ -1,0 +1,45 @@
+---
+number: 0
+title: "Registers and register sets Viua VM programs"
+layout: default
+id: manuals__registers_and_register_sets
+summary: >
+    Viua VM programs operate on values held in registers.
+---
+
+<section class="chapter">
+    <h1> {{ page.title }} </h1>
+
+    <p class="summary">
+        {{ page.summary }}
+        Instructions fetch values from registers, manipulate them, and store the results of these manipulations back in registers.
+        Registers are grouped in three sets: <em>local</em>, <em>static</em>, and <em>global</em>.
+        When fetching values for instructions to operate on the VM must know several things:
+        the index of a register,
+        the register set,
+        and the fetch mode.
+    </p>
+
+    <p>
+        For example, consider code presented below:
+    </p>
+
+    {% highlight lua %}
+    izero %1 local
+    {% endhighlight %}
+
+    <p>
+        The "<code>izero</code>" instruction stores integer zero in a register.
+        Its abstract form is "<code>izero {:r-operand}</code>".
+        "R-operand" is a "register operand", i.e. an operand specifying a register to use for an operation.
+        R-operands are used to specify both input and output registers, and their meaning depends on instruction.
+        For "<code>izero</code>", the r-operand specifies output register.
+        <br>
+        For "<code>move</code>" instruction (which moves values between registers) the first r-operand specifies the output register, and
+        the second r-operand specifies the input register.
+    </p>
+
+    {% highlight lua %}
+    move %1 local %2 static
+    {% endhighlight %}
+</section>
