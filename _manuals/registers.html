@@ -43,3 +43,37 @@ summary: >
     move %1 local %2 static
     {% endhighlight %}
 </section>
+
+<section>
+    <h1> Register sets </h1>
+
+    <p>
+        There are three different register sets: <em>local</em>, <em>static</em>, and <em>global</em>.
+        The basic difference between them is the length of their lifetime.
+        Each set is discussed in detail in its own section.
+    </p>
+
+    <h2> Local register set </h2>
+
+    <p>
+        This register set's lifetime is bound to a call-frame for which it has been spawned.
+        At any point in time there are may exist many local register sets.
+    </p>
+
+    <p>
+        The user program has access to the local register set of only the top-most frame on the stack.
+        It is not possible to access registers in local register set of any frame lower on the stack.
+        Also, contents of local register sets of lower frames do not have any effect on contents of local register sets
+        of the upper frames.
+        Local register sets are isolated from each other, and disposable - they are created anew for every call.
+    </p>
+
+    <p>
+        Tail calls do not inherit local register sets of their original frames.
+    </p>
+
+    <p>
+        Capacity of each local register set may be different and is determined by the user program.
+        Capacity of local register sets is limited to 4'294'967'296 (2^32) registers.
+    </p>
+</section>
