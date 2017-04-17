@@ -177,3 +177,118 @@ summary: >
         </section>
     </section>
 </section>
+
+<hr>
+
+<section>
+    <h1> Registers </h1>
+
+    <p>
+        Registers are "slots" that are used to hold values Viua VM instructions operate on.
+        A register can hold any value representable by Viua program, or be empty.
+    </p>
+
+    <section>
+        <h2> Addressing registers </h2>
+
+        <p>
+            When an instruction wants to fetch a value held in a register, or to put a value in a register, it must properly address the register it wants to access.
+            If the register address supplied by one of instruction's operands is not valid the VM throws an exception.
+            To be valid the address must consist of three parts:
+        </p>
+
+        <ul>
+            <li> a fetch mode </li>
+            <li> an index </li>
+            <li> a register set specifier </li>
+        </ul>
+
+        <p>
+            Each part of register address is explained in more detail below.
+        </p>
+
+        <section>
+            <h2> Fetch modes </h2>
+
+            <p>
+                Fetch mode instructs the VM how it should fetch the value an instruction requests.
+                Usually, the values are fetched by just obtaining register contents, but may also be more complex.
+                It may, for example, involve pointer dereference.
+            </p>
+
+            <p>
+                There are three fetch modes: <em>plain</em>, <em>pointer-dereference</em>, and <em>register-indirect</em>.
+                In source code they are identified by sigils.
+            </p>
+
+            <section>
+                <h2> "Plain" fetch mode </h2>
+
+                <p>
+                    Identified by percent sign - "<code>%</code>".
+                </p>
+
+                <p>
+                    The simplest fetch mode.
+                    It involves just fetching a value from a register at given index from a given register set.
+                    For example:
+                </p>
+
+                {% highlight lua %}
+                    -- print contents of register 1 from local register set
+                    print %1 local
+
+                    -- copy contents of register 4 from static register set
+                    -- into register 2 from local register set
+                    copy %2 local %4 static
+
+                    -- store text in register 1 from global register set
+                    text %1 global "Hello World!"
+                {% endhighlight %}
+            </section>
+
+            <section>
+                <h2> "Pointer dereference" fetch mode </h2>
+
+                <p>
+                    Identified by star sign - "<code>*</code>".
+                </p>
+
+                <p>
+                    This mode is composed of two phases.
+                    The first one involves fetching a value of a register at specified index from a specified register set.
+                    In the second phase the VM dereferences the pointer.
+                    <br>
+                    The value obtained after dereferencing is the one supplied to the instruction.
+                </p>
+
+                <p>
+                    Value fetched by the first phase of this mode <strong>MUST</strong> be a pointer.
+                    Otherwise the VM throws an exception.
+                    An exception is also thrown if the pointer is expired.
+                </p>
+
+                <p>
+                    An example:
+                </p>
+
+                {% highlight lua %}
+                    -- store text in register 1 from local register set
+                    text %1 local "Hello World!"
+
+                    -- store pointer to a value in register 1 from local register set
+                    -- in register 2 from local register set
+                    ptr %2 local %1 local
+
+                    -- print the pointer
+                    -- "TextPointer" will be printed to standard output
+                    print %2 local
+
+                    -- print the value pointed-to by the pointer
+                    -- "Hello World!" will be printed to standard output
+                    print *2 local
+                {% endhighlight %}
+            </section>
+        </section>
+    </section>
+</section>
