@@ -288,6 +288,28 @@ summary: >
                     -- "Hello World!" will be printed to standard output
                     print *2 local
                 {% endhighlight %}
+
+                <section>
+                    <h3> Pointers to values </h3>
+
+                    <p>
+                        It important to note, that <em>Viua pointers <strong>point to values</strong></em>.
+                        The code below works even though the text value was moved between taking the pointer to it and
+                        dereferencing the pointer.
+                    </p>
+
+                    {% highlight lua %}
+                        text %1 local "Hello World!"
+                        ptr %2 local %1 local
+
+                        -- move the value from register 1 from local register set
+                        -- to register 4 from local register set
+                        move %4 local %1 local
+
+                        -- this still works and prints "Hello World!"
+                        print *2 local
+                    {% endhighlight %}
+                </section>
             </section>
         </section>
     </section>
