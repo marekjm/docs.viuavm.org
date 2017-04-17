@@ -311,6 +311,47 @@ summary: >
                     {% endhighlight %}
                 </section>
             </section>
+
+            <section>
+                <h2> "Register indirect" fetch mode </h2>
+
+                <p>
+                    Identified by "at" sign - "<code>@</code>".
+                </p>
+
+                <p>
+                    This mode is composed of two phases.
+                    The first one involves fetching a value of a register at specified index from a specified register set.
+                    In the second phase the VM fetches a value from the register index specified by the integer fetched in the first phase.
+                    <br>
+                    The second phase fetches from the same register set as the first one.
+                    <br>
+                    The value obtained after the second fetch is the one supplied to the instruction.
+                </p>
+
+                <p>
+                    Value fetched by the first phase of this mode <strong>MUST</strong> be an integer.
+                    Otherwise the VM throws an exception.
+                    An exception is also thrown if the register that would be accessed in the second phase does not exist (i.e. the index is out of bounds), or
+                    is empty (i.e. there is no value to be fetched; this is not true for the <code>isnull</code> instruction).
+                </p>
+
+                <p>
+                    An example:
+                </p>
+
+                {% highlight lua %}
+                    -- store text in register 1 from local register set
+                    text %1 local "Hello World!"
+
+                    -- store integer 1 in register 2 from local register set
+                    istore %2 local 1
+
+                    -- print the value using register-indirect fetch mode
+                    -- "Hello World!" will be printed to standard output
+                    print @2 local
+                {% endhighlight %}
+            </section>
         </section>
     </section>
 </section>
