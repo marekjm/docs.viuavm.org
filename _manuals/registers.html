@@ -53,14 +53,24 @@ summary: >
         Each set is discussed in detail in its own section.
     </p>
 
+    <hr>
+
     <section>
         <h2> Local register set </h2>
 
+        <h3> Lifetime </h3>
         <p>
             This register set's lifetime is bound to a call-frame for which it has been spawned.
-            At any point in time there are may exist many local register sets.
+            Local register sets are spawned by <code>frame</code> instructions.
+            They are destroyed when the frame they are associated with is popped off the call stack by <code>return</code> or
+            <code>tailcall</code> instruction.
         </p>
 
+        <p>
+            At any point in time there may be many local register sets spawned.
+        </p>
+
+        <h3> Access </h3>
         <p>
             The user program has access to the local register set of only the top-most frame on the stack.
             It is not possible to access registers in local register set of any frame lower on the stack.
@@ -69,19 +79,24 @@ summary: >
             Local register sets are isolated from each other, and disposable - they are created anew for every call.
         </p>
 
-        <p>
-            Tail calls do not inherit local register sets of their original frames.
-        </p>
-
+        <h3> Capacity </h3>
         <p>
             Capacity of each local register set may be different and is determined by the user program.
             Capacity of local register sets is limited to 4'294'967'296 (2^32) registers.
         </p>
+
+        <h3> Misc notes </h3>
+        <p>
+            Tail calls do not inherit local register sets of their original frames.
+        </p>
     </section>
+
+    <hr>
 
     <section>
         <h2> Static register set </h2>
 
+        <h3> Lifetime </h3>
         <p>
             Static register set's lifetime is bound to a process inside which it has been spawned.
             Static register sets are assigned per-function and are local to a single process.
@@ -89,20 +104,52 @@ summary: >
             same function <code>foo/0</code> inside process B will not see that value inside its first static register.
         </p>
 
+        <h3> Access </h3>
+        <p>
+            The user program has access only to the static register set of the function function that is currently being executed.
+            This means that function <code>foo/0</code> does not have access to static registers of function <code>bar/0</code>.
+        </p>
+
+        <h3> Capacity </h3>
+        <p>
+            Capacity of static register sets is currently fixed at 16 registers.
+        </p>
+
+        <h3> Misc notes </h3>
         <p>
             User functions should always check if their static registers are initialised because there is no guarantee that
             they will be.
             If a function is called inside a new process then it receives a new static register set that is empty.
             Checking for empty registers can be done using the <code>isnull</code> instruction.
         </p>
+    </section>
 
+    <hr>
+
+    <section>
+        <h2> Global register set </h2>
+
+        <h3> Lifetime </h3>
         <p>
-            The user program has access only to the static register set of the function function that is currently being executed.
-            This means that function <code>foo/0</code> does not have access to static registers of function <code>bar/0</code>.
+            Global register set's lifetime is bound to a process for which it has been spawned.
         </p>
 
+        <h3> Access </h3>
         <p>
-            Capacity of static register sets is currently fixed at 16 registers.
+            The user program has access to the global register set at all times, and
+            from any call frame on the stack.
+            There are no restrictions similar to those of static or local register sets, except that
+            global register set is spawned per-process and isolated between processes.
+        </p>
+
+        <h3> Capacity </h3>
+        <p>
+            Capacity of global register sets is currently fixed at 255 registers.
+        </p>
+
+        <h3> Misc notes </h3>
+        <p>
+            There are no special notes related to the global register set.
         </p>
     </section>
 </section>
