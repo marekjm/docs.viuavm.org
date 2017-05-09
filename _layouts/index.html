@@ -117,7 +117,7 @@
 -- Arity is checked at compile time at the call site.
 .function: main/0
     -- Store string in first register of local register set.
-    strstore %1 local "Hello World!"
+    text %1 local "Hello World!"
 
     -- Print the contents of first register from local register set.
     print %1 local
