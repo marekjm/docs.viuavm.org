@@ -2,7 +2,7 @@
 title: text
 layout: isa_opcode
 isa_group: text
-canonical_form: 'text destination:r-operand "utf8-content"'
+canonical_form: 'text Destination:r-operand "utf8-content"'
 summary: >
     Puts a text into a register.
 ---
@@ -11,8 +11,26 @@ summary: >
     <h2> Syntax </h2>
 
     {% highlight lua %}
-    {{ page.canonical_form }}
+    (0) {{ page.canonical_form }}
+    (1) text Destination Source:r-op
     {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Semantics </h2>
+
+    <p>
+        Form (0) stores an UTF-8 encoded text value in a register.
+        Form (1) converts any value to text.
+    </p>
+</section>
+
+<section class="chapter">
+    <h2> Exceptions </h2>
+
+    <p>
+        Form (0) triggers an exception when the text to store is not a valid UTF-8 sequence.
+    </p>
 </section>
 
 <section class="chapter">
@@ -25,6 +43,10 @@ summary: >
 
     texteq %3 local %1 local %2 local
     print %3 local
+
+    istore %4 local 42
+    text %5 local %4 local  -- convert integer to text
+    print %5 local
 
     izero %0 local
     return
