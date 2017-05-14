@@ -48,9 +48,9 @@ layout: default
 
     <p> Sets next value of 'iota' keyword. </p>
 
-    <h3><code>.link:</code></h3>
+    <h3><code>.import:</code></h3>
 
-    <p> Link a module statically. </p>
+    <p> Import a module during assembling (static linking). </p>
 
     <h3><code>.mark:</code></h3>
 
@@ -58,7 +58,11 @@ layout: default
 
     <h3><code>.name:</code></h3>
 
-    <p> Name a register. </p>
+    <p>
+        Name a register.
+        Names are present only during assembling and
+        disappear after the source code is converted to bytecode.
+    </p>
 
     <h3><code>.signature:</code></h3>
 
