@@ -22,103 +22,6 @@ layout: default
 </section>
 
 <section class="chapter">
-    <h2> Notation </h2>
-
-    <p>
-        Several terms are used when describing the syntax and semantics of an instruction.
-        This section discusses their meaning.
-        Read this section before you study the ISA reference.
-    </p>
-
-    <h4> Literal numbers </h4>
-
-    <p> Numbers are written "without escaping", i.e. both 42 and 3.14 stand for themselves. </p>
-
-    <h4> Literal text (character strings) </h4>
-
-    <p> Text (character strings) is written inside double quotes, like this: "Hello World!". </p>
-
-    <h4> R-operands </h4>
-
-    <p>
-        R-operands are register operands, i.e. operands which encode index of a register.
-        They are written as small letter "r" followed by a non-negative integer value, e.g. 'r0', 'r1', and 'r42' are all valid "r" operands.
-        Semantically, r-operands evaluate to direct values, or - in case of pointer dereference - values pointed
-        to by pointers held in their respective registers.
-    </p>
-
-    <p>
-        In source code, r-operands are composed of three parts: sigil, index, and register-set specifier.
-        The sigil is either '%' meaning "the value under specified index", or
-        '*' meaning "the value the pointer located under specified index points to", or
-        '@' meaning "the value inside a register indexed by the integer found in the register specified by the index".
-        "Register-set specifier" is a special value specifying from which register set the value for this operand should be fetched.
-    </p>
-
-    <p> Some examples of r-operands in source code: </p>
-
-    {% highlight lua %}
-    -- evaluates to the value from local register 1
-    %1 local
-
-    -- evaluates to the value from static register 1
-    %1 static
-
-    -- evaluates to the value from global register 1
-    %1 global
-
-    -- evaluates to the value pointed-to by the pointer located in local register 1
-    *1 local
-
-    -- evaluates to the value located in local register whose index is specified by the
-    -- integer stored in local register 1
-    @1 local
-    {% endhighlight %}
-
-    <h4> Indexes </h4>
-
-    <p>
-        Some instructions, for example "arg", require an "index" operand.
-        Index operands are a written as a percent sign followed by a non-negative integer and specify register indexes.
-        For example: <code>%1</code> is an index operand, but <code>%1 local</code> is not (it is an r-operand).
-    </p>
-
-    <h4> Void </h4>
-
-    <p>
-        A single "void" token represents a "void" operand, i.e. operand that represents "no-value-at-all".
-        It is used primarily when dropping return values from functions when writing <code>call</code> instructions.
-    </p>
-
-    {% highlight lua %}
-    -- call function example/0 and
-    -- drop the return value
-    call void example/0
-    {% endhighlight %}
-
-    <h4> Register set specifiers </h4>
-
-    <p> Either of: <code>local</code>, <code>static</code>, <code>global</code>. </p>
-
-    <h4> Optional elements </h4>
-
-    <p> Optional elements are written enclosed by square brackets. For example: </p>
-
-    {% highlight lua %}
-    call [ void ] example/0
-    {% endhighlight %}
-
-    <p> means that the <code>void</code> is optional and may will be inserted automatically by the assembler when processing the source code. </p>
-
-    <h4> Other symbols </h4>
-
-    <p>
-        Other symbols used will be described whenever they are used.
-        They are written like this (without the quotes): "{some-descriptive-name}" or "{some-descriptive-name:operand-type}".
-    </p>
-</section>
-
-<section class="chapter">
     <h2>Directives</h2>
 
     <h3><code>.block:</code></h3>
@@ -148,10 +51,6 @@ layout: default
     <h3><code>.link:</code></h3>
 
     <p> Link a module statically. </p>
-
-    <h3><code>.main:</code></h3>
-
-    <p> Set a non-standard main function. <em><strong>DEPRECATED</strong></em> </p>
 
     <h3><code>.mark:</code></h3>
 
