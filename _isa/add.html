@@ -26,9 +26,9 @@ related_instructions:
     </p>
 
     {% highlight lua %}
-add int8 %1 local %2 local
+add %1 local %2 local
 -- expands to...
-add int8 %1 local %1 local %2 local
+add %1 local %1 local %2 local
     {% endhighlight %}
 </section>
 

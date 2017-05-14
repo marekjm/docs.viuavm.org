@@ -25,9 +25,9 @@ related_instructions:
     </p>
 
     {% highlight lua %}
-div int8 %1 local %2 local
+div %1 local %2 local
 -- expands to...
-div int8 %1 local %1 local %2 local
+div %1 local %1 local %2 local
     {% endhighlight %}
 
     <p> Operands "r1" and "r2" may use pointer dereference. </p>
