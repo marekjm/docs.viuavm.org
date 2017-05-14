@@ -2,7 +2,7 @@
 title: add
 layout: isa_opcode
 isa_group: arithmetic
-canonical_form: 'add {numeric-type-specifier} {output:r-operand} {lhs:r-operand} {rhs:r-operand}'
+canonical_form: 'add {output:r-operand} {lhs:r-operand} {rhs:r-operand}'
 summary: >
     Performs arithmetic addition.
     Both operand numbers can be of different types, type of result is determined by result type specifier.
@@ -16,13 +16,13 @@ related_instructions:
     <h2> Syntax </h2>
 
     {% highlight text %}
-    (0)     add numeric-type-specifier r0 r1 r2
-    (1)     add numeric-type-specifier r0 r1 
+    (0)     add r0 r1 r2
+    (1)     add r0 r1 
     {% endhighlight %}
 
     <p>
         <code>(0)</code> is the canonical form.
-        Assembler expands <code>(1)</code> to "<code>add numeric-type-specifier r0 r0 r1".
+        Assembler expands <code>(1)</code> to "<code>add r0 r0 r1".
     </p>
 
     {% highlight lua %}
@@ -30,10 +30,6 @@ add int8 %1 local %2 local
 -- expands to...
 add int8 %1 local %1 local %2 local
     {% endhighlight %}
-
-    <p> Operands "r1" and "r2" may use pointer dereference. </p>
-
-    <p> "numeric-type-specifier" may be one of: int8, int16, int32, int64, float32, float64. </p>
 </section>
 
 <section class="chapter">
@@ -41,7 +37,7 @@ add int8 %1 local %1 local %2 local
 
     <p>
         Adds number in "r2" to number in "r1" and stores the result in "r0".
-        Type of the result of said operation is determined by the "numeric-type-specifier".
+        Type of the result is determined by the type of left-hand side operand's value.
         Input operands are signed integers or floating point numbers.
     </p>
 </section>
