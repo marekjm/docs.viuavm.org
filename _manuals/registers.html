@@ -405,3 +405,27 @@ summary: >
         </section>
     </section>
 </section>
+
+<hr>
+
+<section>
+    <h1> Common exceptions </h1>
+
+    <p>
+        Using empty registers as source operands will result in an exception being thrown by the VM.
+        The <code>isnull</code> instruction may be used to check if a register is empty.
+    </p>
+
+    <p>
+        Accessing "out of range" registers either as destination or source operands will result in an exception being thrown by the VM.
+        There is no instruction that can be used to check if a register index is "in range".
+    </p>
+
+    <p>
+        Using incorrect fetch mode for either destination or source operands will result in an exception being thrown by the VM.
+        Sometimes several fetch modes are correct from the VM point of view.
+        It is programmer's responsibility to ensure the right fetch mode from their point of view is used.
+        For example, for pointers either "plain" or "pointer dereference" fetch mode can be used, but the value supplied to the instruction
+        will be different.
+    </p>
+</section>
