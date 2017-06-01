@@ -86,14 +86,14 @@ related_instructions:
 .end
 
 .function: runs_deferred_a/0
-    frame %0
-    defer runs_nested_deferred/0
-
     print (text %1 local "Hello World! (a)")
     return
 .end
 
 .function: runs_deferred_b/0
+    frame %0
+    defer runs_nested_deferred/0
+
     print (text %1 local "Hello World! (b)")
     return
 .end
