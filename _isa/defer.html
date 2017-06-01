@@ -1,0 +1,122 @@
+---
+title: defer
+layout: isa_opcode
+isa_group: calls
+canonical_form: 'defer function-name:atom|r-op'
+summary: >
+    Calls a function when current frame is being discarded.
+related_instructions:
+    - frame
+    - param
+    - pamv
+    - arg
+    - tailcall
+    - return
+    - process
+    - call
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+    defer some_function/0
+    defer %some_fn local
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Semantics </h2>
+
+    <p>
+        <code>defer</code> instruction takes either a function name, or
+        an operand evaluating to callable value as input.
+        It has no output, and
+        is used solely for its side effects.
+    </p>
+
+    <p>
+        Deferred calls are invoked when the call frame in which they were registered is
+        being logically discarded.
+        This means that deferred calls are invoked:
+
+        <ul>
+            <li>when a <code>return</code> instruction is executed</li>
+            <li>when a <code>tailcall</code> instruction is executed</li>
+            <li>during stack unwinding after an exception is thrown</li>
+        </ul>
+    </p>
+
+    <h3>Order of invocation</h3>
+
+    <p>
+        Deferred calls are invoked in reverse order of registration.
+        If deferred call to <code>fA/0</code> is registered before
+        deferred call to </code>fB/0</code> then <code>fB/0</code> will be invoked
+        before <code>fA/0</code>.
+    </p>
+
+    <p>
+        Deferred calls may be nested, i.e. functions invoked by <code>defer</code> instruction may
+        register further deferred calls.
+        The order of invocation is preserved in such situations, meaning that if
+        <code>fN/0</code> defers <code>fA/0</code> and then <code>fB/0</code>, and
+        <code>fB/0</code> defers <code>fC/0</code> then the order of invocations is as follows:
+
+        <ol>
+            <li><code>fN/0</code></li>
+            <li><code>fB/0</code></li>
+            <li><code>fC/0</code></li>
+            <li><code>fA/0</code></li>
+        </ol>
+    </p>
+
+    <p>
+        <code>fC/0</code> is invoked before <code>fA/0</code> because it was deferred later.
+    </p>
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: runs_nested_deferred/0
+    print (text %1 local "Hello World! (nested)")
+    return
+.end
+
+.function: runs_deferred_a/0
+    frame %0
+    defer runs_nested_deferred/0
+
+    print (text %1 local "Hello World! (a)")
+    return
+.end
+
+.function: runs_deferred_b/0
+    print (text %1 local "Hello World! (b)")
+    return
+.end
+
+.function: main/0
+    frame %0
+    defer runs_deferred_a/0
+
+    frame %0
+    defer runs_deferred_b/0
+
+    izero %0 local
+    return
+.end
+    {% endhighlight %}
+
+    <p>
+        Expected output:
+    </p>
+
+<pre><code>
+    Hello World! (b)
+    Hello World! (nested)
+    Hello World! (a)
+</code></pre>
+</section>
