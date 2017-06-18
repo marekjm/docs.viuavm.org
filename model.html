@@ -177,19 +177,41 @@ closure %1 foo/0
 
             <section>
                 <h3> Lifetime </h3>
+
                 <p>
-                    Static register set's lifetime is bound to a process inside which it has been spawned.
-                    Static register sets are assigned per-function and are local to a single process.
-                    That means that if function <code>foo/0</code> inside process A puts <code>42</code> in first static register, the
-                    same function <code>foo/0</code> inside process B will not see that value inside its first static register.
+                    Static register sets live as long as the process inside which they have been spawned.
                 </p>
+
+                <section>
+                    <h4>Creation</h4>
+
+                    <p>
+                        Static register sets are created before their first use.
+                        This means that they may be spawned eagerly when a process is created for every function that uses a static register set, or
+                        lazily - when the runtime detects a function is about to access its static register set.
+                        It does not make a difference to the function when the static register set is allocated as long as it can use it.
+                    </p>
+                </section>
+
+                <section>
+                    <h4>Destruction</h4>
+
+                    <p>
+                        Static register sets are destroyed after the last frame of a process is popped off the stack, i.e.
+                        when the process is no longer able to run any more instructions.
+                    </p>
+                </section>
             </section>
 
             <section>
                 <h3> Access </h3>
                 <p>
-                    The user program has access only to the static register set of the function function that is currently being executed.
-                    This means that function <code>foo/0</code> does not have access to static registers of function <code>bar/0</code>.
+                    Static register sets are assigned per-function and are local to a single process.
+                    A function <code>foo/0</code> does not have access to static registers of function <code>bar/0</code>.
+                    If function <code>foo/0</code> inside process A puts <code>42</code> in first static register, the
+                    same function <code>foo/0</code> inside process B will not see that value inside its first static register.
+                    The user program also has access only to the static register set of the function function that is currently being executed
+                    by the top-most frame on the stack.
                 </p>
             </section>
 
@@ -203,9 +225,9 @@ closure %1 foo/0
             <section>
                 <h3> Miscellaneous notes </h3>
                 <p>
-                    User functions should always check if their static registers are initialised because there is no guarantee that
-                    they will be.
-                    If a function is called inside a new process then it receives a new static register set that is empty.
+                    User functions should always check if their static registers are empty before using them.
+                    It is a function's responsibility to initialise its own static registers - static <em>register set</em> will
+                    be always provided when the function requests it but will be completely empty during the first access.
                     Checking for empty registers can be done using the <code>isnull</code> instruction.
                 </p>
             </section>
