@@ -86,6 +86,7 @@ layout: default
                 <p>
                     This register set's lifetime is bound to the call frame for which it has been spawned, or
                     to the closure for which is has been created.
+                    At any point in time there may be many local register sets spawned.
                 </p>
 
                 <p>
@@ -111,31 +112,33 @@ layout: default
                     </p>
 
                     {% highlight lua %}
-                    -- spawn a frame whose local register set will contain 20 registers
-                    -- the frame will accept no parameters
-                    --
-                    --  frame {no-of-parameters} {no-of-local-registers}
-                    frame %0 %20
+-- spawn a frame whose local register set will contain 20 registers
+-- the frame will accept no parameters
+--
+--  frame {no-of-parameters} {no-of-local-registers}
+frame %0 %20
 
-                    -- closure stored in register 1, using body of function foo/0
-                    --
-                    --  closure {index-of-register-where-closure-is-stored} {function-implementing-body-of-the-closure}
-                    closure %1 foo/0
+-- closure stored in register 1, using body of function foo/0
+--
+--  closure {index-of-register-where-closure-is-stored} {function-implementing-body-of-the-closure}
+closure %1 foo/0
                     {% endhighlight %}
                 </section>
 
-                </section>
+                <section>
                     <h4> Destruction </h4>
 
                     <p>
-                        They are destroyed when the frame they are associated with is popped off the call stack by <code>return</code> or
-                        <code>tailcall</code> instruction.
+                        Local register sets spawned using <code>frame</code> destroyed when the frame they are associated with
+                        is popped off the call stack by <code>return</code> or <code>tailcall</code> instruction, or
+                        during stack unwinding when an exception is thrown.
+                    </p>
+
+                    <p>
+                        Closure-local register sets are destroyed when their closure is destroyed.
+                        Closures obey the lifetime rules of Viua values, which are described in another section.
                     </p>
                 </section>
-
-                <p>
-                    At any point in time there may be many local register sets spawned.
-                </p>
             </section>
 
             <section>
