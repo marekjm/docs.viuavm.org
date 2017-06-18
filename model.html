@@ -13,19 +13,12 @@ layout: default
 </section>
 
 <section>
-    <h1> Values, registers, and register sets </h1>
+    <h1> Registers and register sets </h1>
 
     <p>
         Viua is a register-based VM.
-        Programs running on it manipulate values held in <em>registers</em> not on a <em>stack</em>.
-        This section describes:
+        Programs running on it manipulate values held in <em>registers</em> instead of on a <em>stack</em>.
     </p>
-
-    <ul>
-        <li>how values are used in Viua VM programs</li>
-        <li>how to fetch a value from a register</li>
-        <li>what is a register</li>
-    </ul>
 
     <section>
         <h2> Summary </h2>
@@ -34,31 +27,8 @@ layout: default
             On the lowest level, Viua VM programs are sequences of <em>instructions</em>.
             Instruction fetch, manipulate (modify, delete, move, copy, etc.), and produce <em>values</em>.
             Values are stored in <em>registers</em>.
-        </p>
-    </section>
-
-    <section>
-        <h2> Values </h2>
-
-        <p>
-            Values are instances of types supported by Viua VM.
-        </p>
-
-        <p>
-            From the user point of view values are "whole pieces" - VM does not provide instructions to
-            access, for example, a third byte of an integer.
-            If a value is an instance of a compound type (e.g. a vector) the VM may expose instructions to
-            access individual elements of the complex value, but each accessed element will be a Viua value.
-            There is no way a program may learn about internal structure of a value short of invoking a FFI
-            function and then casting the value into a <code>unsigned char*</code> to access the bytes that
-            from the value.
-        </p>
-
-        <p>
-            Also, there is no concept of "memory" in the traditional sense.
-            Viua VM programs do not request "eight bytes for an integer", they just request an integer.
-            The concept of "memory" is abstracted away in Viua VM.
-            Programs cannot put values in "memory", values can only exist in registers.
+            This section describes what is a register, a register set, and how values can be stored in and
+            fetched from registers.
         </p>
     </section>
 
@@ -66,7 +36,8 @@ layout: default
         <h2> Register sets </h2>
 
         <p>
-            Register sets are just that - ordered sets of registers, with limited capacity.
+            A "register set" is array of registers, with limited capacity.
+            Size of register sets is determined statically, at compile time.
             There are three main register sets:
         </p>
 
@@ -102,17 +73,65 @@ layout: default
             </li>
         </ul>
 
+        <p>
+            All register sets are process-local, meaning that no register set is shared between processes.
+        </p>
+
         <section>
             <h2> Local register set </h2>
 
             <section>
                 <h3> Lifetime </h3>
+
                 <p>
-                    This register set's lifetime is bound to a call-frame for which it has been spawned.
-                    Local register sets are spawned by <code>frame</code> instructions.
-                    They are destroyed when the frame they are associated with is popped off the call stack by <code>return</code> or
-                    <code>tailcall</code> instruction.
+                    This register set's lifetime is bound to the call frame for which it has been spawned, or
+                    to the closure for which is has been created.
                 </p>
+
+                <p>
+                    In the first case, the lifetime of the register set (and its registers and their contents) can
+                    be statically determined by analysing when the call frame will be popped off the stack.
+                </p>
+
+                <p>
+                    In the second case, the liftetime is more dynamic since the closure can be returned as a value from
+                    a function and thus outlive its original environment.
+                    Determining the lifetime of local register set of a closure requires analysing lifetime of the closure,
+                    which almost always can be done.
+                </p>
+
+                <section>
+                    <h4> Creation </h4>
+
+                    <p>
+                        Local register sets are spawned either by <code>frame</code>, or by <code>closure</code> instruction.
+                        Capacity of register set spawned by <code>frame</code> instruction is stated explicitly.
+                        Register set spawned using <code>closure</code> instruction inherits capacity from its enclosing
+                        environment.
+                    </p>
+
+                    {% highlight lua %}
+                    -- spawn a frame whose local register set will contain 20 registers
+                    -- the frame will accept no parameters
+                    --
+                    --  frame {no-of-parameters} {no-of-local-registers}
+                    frame %0 %20
+
+                    -- closure stored in register 1, using body of function foo/0
+                    --
+                    --  closure {index-of-register-where-closure-is-stored} {function-implementing-body-of-the-closure}
+                    closure %1 foo/0
+                    {% endhighlight %}
+                </section>
+
+                </section>
+                    <h4> Destruction </h4>
+
+                    <p>
+                        They are destroyed when the frame they are associated with is popped off the call stack by <code>return</code> or
+                        <code>tailcall</code> instruction.
+                    </p>
+                </section>
 
                 <p>
                     At any point in time there may be many local register sets spawned.
@@ -492,4 +511,29 @@ layout: default
             </p>
         </section>
     </section>
+</section>
+
+<section>
+    <h1> Values </h1>
+
+    <p>
+        Values are instances of types supported by Viua VM.
+    </p>
+
+    <p>
+        From the user point of view values are "whole pieces" - VM does not provide instructions to
+        access, for example, a third byte of an integer.
+        If a value is an instance of a compound type (e.g. a vector) the VM may expose instructions to
+        access individual elements of the complex value, but each accessed element will be a Viua value.
+        There is no way a program may learn about internal structure of a value short of invoking a FFI
+        function and then casting the value into a <code>unsigned char*</code> to access the bytes that
+        from the value.
+    </p>
+
+    <p>
+        Also, there is no concept of "memory" in the traditional sense.
+        Viua VM programs do not request "eight bytes for an integer", they just request an integer.
+        The concept of "memory" is abstracted away in Viua VM.
+        Programs cannot put values in "memory", values can only exist in registers.
+    </p>
 </section>
