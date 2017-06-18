@@ -136,6 +136,8 @@ closure %1 foo/0
 
                     <p>
                         Closure-local register sets are destroyed when their closure is destroyed.
+                        During lifetime of the closure-local register set it may be pushed to the stack, and
+                        popped off it many times without being destroyed.
                         Closures obey the lifetime rules of Viua values, which are described in another section.
                     </p>
                 </section>
