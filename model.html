@@ -565,20 +565,78 @@ closure %1 foo/0
         Values are instances of types supported by Viua VM.
     </p>
 
-    <p>
-        From the user point of view values are "whole pieces" - VM does not provide instructions to
-        access, for example, a third byte of an integer.
-        If a value is an instance of a compound type (e.g. a vector) the VM may expose instructions to
-        access individual elements of the complex value, but each accessed element will be a Viua value.
-        There is no way a program may learn about internal structure of a value short of invoking a FFI
-        function and then casting the value into a <code>unsigned char*</code> to access the bytes that
-        from the value.
-    </p>
+    <section>
+        <h2> Values as entities </h2>
 
-    <p>
-        Also, there is no concept of "memory" in the traditional sense.
-        Viua VM programs do not request "eight bytes for an integer", they just request an integer.
-        The concept of "memory" is abstracted away in Viua VM.
-        Programs cannot put values in "memory", values can only exist in registers.
-    </p>
+        <p>
+            From the user point of view values are "whole pieces" - VM does not provide instructions to
+            access, for example, a third byte of a floating point value.
+            If a value is an instance of a compound type (e.g. a vector) the VM may expose instructions to
+            access individual elements of the complex value, but each accessed element will be a Viua value.
+            There is no way a program may learn about internal structure of a value short of invoking a FFI
+            function and then casting the value into a <code>unsigned char*</code> to access the bytes that
+            from the value.
+        </p>
+
+        <p>
+            Also, there is no concept of "memory" in the traditional sense.
+            Viua VM programs do not request "eight bytes for an integer", they just request an integer.
+            The concept of "memory" is abstracted away in Viua VM.
+            Programs cannot put values in "memory", values can only exist in registers.
+        </p>
+    </section>
+
+    <section>
+        <h2> Value semantics </h2>
+
+        <p>
+            Viua programs see values as "values" not as "references to values", and
+            this rule is applied consistently.
+            It is probably most visible during function calls - when vectors are passed by value and
+            do not decay into pointers (a la C arrays) or are passed by reference (a la Python lists).
+        </p>
+
+        <section>
+            <h3> Moves </h3>
+
+            <p>
+                To avoid frequent copying which would be implied by the no-references rule, many Viua instructions and
+                mechanisms use move semantics instead.
+                For example: function returns, and exception throwing are always done by moving values.
+            </p>
+
+            <p>
+                The thinking behind this is that if you want a copy you can create it yourself before the move happens, but it is not easy
+                the other way around, that is: if you wanted a move but the language by default gives you a copy, what can you do about it?
+            </p>
+
+            <p>
+                Moves in Viua are real moves instead of a "steal-my-guts" moves.
+                Moved value <em>really is</em> moved from one place to another, e.g. from one register to another, from a register into a slot in a vector, etc.
+            </p>
+
+            <section>
+                <h4> Inter-process communication and message passing </h4>
+
+                <p>
+                    Some places when moves are <strong><em>not</em></strong> used is message passing and other forms of inter-process communication.
+                </p>
+
+                <p>
+                    Although, in theory, values <em>could</em> be moved between processes without violating the no-sharing-between-processes rule when sent as messages they are copied.
+                    This is done this way to provide consistency as there are no differneces between sending a value to a process running on the same VM instance (i.e.
+                    in the same underlying address space) or over a network to a process running in a different VM instance (and different address space).
+                </p>
+
+                <p>
+                    The same thinking is applied when values are transfered between processes as exceptions or return values during process joins.
+                    Even though a value is normally moved in such cases it is copied when return or catch involves crossing process boundaries.
+                </p>
+            </section>
+        </section>
+    </section>
+
+    <section>
+        <h2> Pointers </h2>
+    </section>
 </section>
