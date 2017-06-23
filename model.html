@@ -669,5 +669,20 @@ closure %1 foo/0
             pointers taken in process A illegal in process B.
             If such dereferences were allowed then processes could be made to share values which is not permitted in Viua.
         </p>
+
+        <h3> Nesting </h3>
+
+        <p>
+            It is possible to create pointers to pointers in Viua.
+            Dereferencing must be done one nest-level at a time.
+            This means that if a value is hidden behind a three-level pointer, three Viua instructions will be needed to get it.
+        </p>
+
+        <p>
+            However, it is impossible to make a pointer immediately pointing to itself, because
+            pointers are taken <em>to existsing values</em> and the pointer does not exist before its creation.
+            Also, pointers cannot be rebound so it is impossible to take a pointer and
+            then rebind it to point to itself.
+        </p>
     </section>
 </section>
