@@ -643,6 +643,31 @@ closure %1 foo/0
             Pointers in Viua point <em>to values</em>, not to locations.
             For example, a pointer to a vector can be taken, and when this vector is moved (e.g. to another register, or
             moved as a parameter to a nested call) the pointer is still valid.
+            This is in contrast to pointers known from C or C++.
+        </p>
+
+        <h3> Safety and expored pointers </h3>
+
+        <p>
+            Pointers in Viua may be considered safe by virtue of being aware of the fact whether the value they point to
+            exists or not.
+            While it is not possible to create a null pointer, it is possible that the value to which the pointer has been
+            taken was destroyed.
+            In such an event the pointer becomes "<em>expired</em>" and dereferencing it produces an exception (which can be handled).
+        </p>
+
+        <h3> Invalidation </h3>
+
+        <p>
+            Pointers become invalid when either the value they point to is destroyed (then they are said to have <em>expired</em>), or
+            when they are sent as a message to another process as pointers are only valid inside the process in which they were created.
+            When a pointer crosses process boundaries any dereference of it will produce an exception.
+        </p>
+
+        <p>
+            Viua does not prevent the pointers from being sent as messages, but enforces the isolation of process by making dereferences of
+            pointers taken in process A illegal in process B.
+            If such dereferences were allowed then processes could be made to share values which is not permitted in Viua.
         </p>
     </section>
 </section>
