@@ -686,3 +686,80 @@ closure %1 foo/0
         </p>
     </section>
 </section>
+
+<section>
+    <h1> Data types </h1>
+</section>
+
+<section>
+    <h1> Processes and stacks </h1>
+
+    <section>
+        <h2> Process </h2>
+    </section>
+
+    <section>
+        <h2> Stack </h2>
+    </section>
+
+    <section>
+        <h2> Errors </h2>
+    </section>
+
+    <section>
+        <h2> Isolation and communication </h2>
+    </section>
+
+    <section>
+        <h2> Asynchrony, concurrency, parallelism </h2>
+    </section>
+</section>
+
+<hr>
+
+<section>
+    <h1> Technical details </h1>
+</section>
+
+<section>
+    <h1> Scheduling </h1>
+
+    <section>
+        <h2> Virtual processes </h2>
+    </section>
+
+    <section>
+        <h2> FFI </h2>
+    </section>
+
+    <section>
+        <h2> I/O </h2>
+    </section>
+</section>
+
+<section>
+    <h1> FFI </h1>
+
+    <section>
+        <h2> Viua to foreign functions </h1>
+
+        <p>
+            Calling foreign functions from Viua code.
+        </p>
+    </section>
+
+    <section>
+        <h2> Foreign functions to Viua </h1>
+
+        <p>
+            Calling Viua code from foreign functions.
+        </p>
+
+        <p>
+            Foreign functions calling Viua code should be split into two parts.
+            After calling Viua code, foreign function should return to free FFI scheduler.
+            Otherwise, some kind of suspension mechanism must be devised to allow suspending foreign functions
+            mid-call while allowing Viua code called from them to run.
+        </p>
+    </section>
+</section>
