@@ -37,14 +37,21 @@ related_instructions:
 
     <p>
         Deferred calls are invoked when the call frame in which they were registered is
-        being logically discarded.
-        This means that deferred calls are invoked:
+        being logically discarded, that is:
+    </p>
 
-        <ul>
-            <li>when a <code>return</code> instruction is executed</li>
-            <li>when a <code>tailcall</code> instruction is executed</li>
-            <li>during stack unwinding after an exception is thrown</li>
-        </ul>
+    <ul>
+        <li>when a <code>return</code> instruction is executed</li>
+        <li>when a <code>tailcall</code> instruction is executed</li>
+        <li>during stack unwinding after an exception is thrown</li>
+    </ul>
+
+    <p>
+        Deferred calls are guaranteed to finish running before the frame is dropped, and
+        its values destroyed so all pointers to values existing in the frame being dropped that
+        were passed to the deferred call are valid for the duration of the deferred call.
+        This may be, for example, used to implement resource management: a deferred call may receive
+        a pointer to a file handle, and close the handle via the pointer.
     </p>
 
     <h3>Order of invocation</h3>
