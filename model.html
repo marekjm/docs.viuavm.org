@@ -764,7 +764,65 @@ closure %1 foo/0
     </section>
 
     <section>
-        <h2> Bytes and bitstrings </h2>
+        <h2> Byte strings and bit strings </h2>
+
+        <p>
+            Byte string is a string whose element is an 8-bit unsigned integer.
+            Bit string is a string whose element is single bit.
+        </p>
+
+        <section>
+            <h3> Byte strings </h3>
+
+            <p>
+                Byte strings are useful for storing a variable amount of bytes.
+                They are the typical unstructured bag-o'-bytes.
+            </p>
+
+            <p>
+                Byte strings may be freely converted to bit strings.
+            </p>
+        </section>
+
+        <section>
+            <h3> Bit strings </h3>
+
+            <p>
+                Bit strings are useful for storing bitmasks, and
+                fixed-size signed or unsigned integers.
+            </p>
+
+            <p>
+                The VM provides instructions to perform (bitwise) `or`, `and`, `not`, `xor` operations.
+            </p>
+            <p>
+                Instructions are also available for signed and unsigned arithmetic: `bitumul`, `bitudiv`, `bituadd`, `bitusub`, and
+                `bitsmul`, `bitsdiv`, `bitsadd`, `bitssub`.
+            </p>
+            <p>
+                Shifts and rotates are provided in "naive" and arithetic variant: `bitshl`, `bitshr`, `bitrol`, `bitror`, `bitashl`, `bitashr`, `bitarol`, `bitaror`.
+                Shifts modify bit strings in-place, and the shifted-out parts is produced as the output of the instruction.
+                Rotates modify bit strings in place.
+            </p>
+
+            <p>
+                Access to individual bits and substrings is provided by `bitat`, and `bitsbetween` instructions.
+            </p>
+
+            <section>
+                <h4> Conversion to Integer type </h4>
+
+                <p>
+                    Bit strings whose length is a multiple of 8 may be freely converted to Integers.
+                    When the conversion is performed, it is assumed that the bit string represents a big-endian integer.
+                </p>
+
+                <p>
+                    Integers may be converted to bit strings without additional constraints.
+                    Big endian encoding is used when converting integers to bit strings.
+                </p>
+            </section>
+        </section>
     </section>
 
     <section>
