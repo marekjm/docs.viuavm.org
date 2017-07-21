@@ -1,0 +1,29 @@
+---
+title: bitset
+layout: isa_opcode
+isa_group: bits
+canonical_form:  'bitset target:r-op index:r-op value:boolean-literal'
+summary: >
+    Set a bit inside a bit string.
+related_instructions:
+    - bits
+    - bitat
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+{{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: example/0
+    return
+.end
+    {% endhighlight %}
+</section>

@@ -1,0 +1,41 @@
+---
+title: bitnot
+layout: isa_opcode
+isa_group: bits
+canonical_form:  'bitnot destination:r-op source:r-op'
+summary: >
+    Negate a bit string.
+related_instructions:
+    - bits
+    - bitand
+    - bitor
+    - bitxor
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+{{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Semantics </h2>
+
+    <p>
+        Every bit in the source bit string is negated.
+        Ones become zeroes, and zeroes become ones.
+        The source value is not modifed.
+    </p>
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: example/0
+    return
+.end
+    {% endhighlight %}
+</section>

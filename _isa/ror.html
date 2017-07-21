@@ -1,0 +1,29 @@
+---
+title: ror
+layout: isa_opcode
+isa_group: bits
+canonical_form:  'ror source:r-op offset:r-op'
+summary: >
+    Rotate bits to the right.
+related_instructions:
+    - bits
+    - rol
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+{{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: example/0
+    return
+.end
+    {% endhighlight %}
+</section>

@@ -1,0 +1,41 @@
+---
+title: bits
+layout: isa_opcode
+isa_group: bits
+canonical_form:  'bits destination:r-op value:bits-literal'
+summary: >
+    Create a bit string value.
+related_instructions:
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+{{ page.canonical_form }}
+bits destination:r-op width:r-op
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    <p>
+        Bit literals can be written as binary, octal, or hexadecimal numbers.
+        Alternatively, bits can be initialised by setting their width in which case
+        they will be filled with zeroes.
+    </p>
+
+    {% highlight lua %}
+.function: example/0
+    bits %1 local 0b100111010
+    bits %2 local 0o755
+    bits %3 local 0xdeadbeef
+
+    istore %4 local 8
+    bits %4 local %4 local
+
+    return
+.end
+    {% endhighlight %}
+</section>

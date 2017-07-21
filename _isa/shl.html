@@ -1,0 +1,43 @@
+---
+title: shl
+layout: isa_opcode
+isa_group: bits
+canonical_form:  'shl out:r-op source:r-op offset:r-op'
+summary: >
+    Perform a logical shift left.
+related_instructions:
+    - bits
+    - shr
+    - ashl
+    - ashr
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+{{ page.canonical_form }}
+shl void source:r-op offset:r-op
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Semantics </h2>
+
+    <p>
+        Bits in source value are shifted to the left by the number specifier by the
+        integer from the offset operand, zeroes are used to pad the value from the right.
+        The source value is modified in-place.
+        The bits that were shifted out are put in the "out" register, if it is not void.
+    </p>
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: example/0
+    return
+.end
+    {% endhighlight %}
+</section>

@@ -1,0 +1,39 @@
+---
+title: bitand
+layout: isa_opcode
+isa_group: bits
+canonical_form:  'bitand destination:r-op lhs:r-op rhs:r-op'
+summary: >
+    Perform bitwise and of two bit strings.
+related_instructions:
+    - bits
+    - bitor
+    - bitxor
+    - bitnot
+---
+
+<section class="chapter">
+    <h2> Syntax </h2>
+
+    {% highlight lua %}
+{{ page.canonical_form }}
+    {% endhighlight %}
+</section>
+
+<section class="chapter">
+    <h2> Examples </h2>
+
+    {% highlight lua %}
+.function: example/0
+    bits %1 local 0b0011
+    bits %2 local 0b1010
+
+    bitand %3 local %1 local %2 local
+
+    -- prints '0010'
+    print %3 local
+
+    return
+.end
+    {% endhighlight %}
+</section>
