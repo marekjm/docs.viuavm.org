@@ -1,242 +1,27 @@
-/** Reset browser-default margin and padding, and
- *  set overall color scheme.
- */
 html, body {
-    display: block;
-    margin: 0;
-    padding: 0;
-    background-color: #060606;
-    color: #caceca;
-}
-
-
-/*
- ***********************************************************
- *  Index styles.
- ***********************************************************
- */
-section.index {
-    display: block;
-    margin: 1em auto;
-    padding: 2em 8em;
-}
-section.index h1 {
-    display: block;
-    margin: 0;
-    padding: 0;
-    font-size: 12em;
-    font-weight: lighter;
-    font-family: monospace;
-    letter-spacing: 0.1em;
-    text-align: center;
-    color: #caceca;
-    text-shadow: 0 0 0.1em #6adf6a;
-}
-section.index h4.boast {
-    display: block;
-    margin: 0;
-    padding: 0;
-    letter-spacing: 0.1em;
-    font-weight: normal;
-    font-family: monospace;
-    text-align: center;
-}
-section.index h4.boast span.spacer {
-    color: #f00;
-    font-family: monospace;
-}
-
-nav.index {
-    display: block;
-    margin: 2em auto;
-    padding: 1em;
-    text-align: center;
-    font-family: monospace;
-}
-nav.index a {
-    display: inline-block;
-    margin: 0;
-    padding: 0 1em;
-    color: #a0a0a0;
-    font-size: 2em;
-}
-
-body.index footer {
-    display: block;
-    margin: 8em 0 0 0;
-    padding: 1em;
-    color: #a0a0a0;
-    font-size: 1em;
-    text-align: center;
-    font-family: monospace;
-}
-
-
-/*
- ***********************************************************
- *  Global styles.
- ***********************************************************
- */
-body footer {
-    display: block;
-    margin: 2em 0 0 0;
-    padding: 1em;
-    color: #a0a0a0;
-    font-size: 1em;
-    text-align: center;
-    font-family: monospace;
-}
-
-
-/** Navigation styles.
- */
-nav {
-    display: block;
-    margin: 0 0 1em 0;
-    padding: 1em;
-    text-align: left;
-    font-family: monospace;
-}
-nav a {
-    display: inline-block;
-    margin: 0;
-    padding: 0 0.2em;
-    color: #80a080;
-    font-size: 1.25em;
-    text-decoration: none;
-}
-nav a:hover {
-    color: #a0f0a0;
-    text-decoration: underline;
-}
-nav span.spacer {
-    color: #f00;
-}
-
-
-/** Introduction manual "chapter" styles.
- */
-.chapter {
-    display: block;
-    margin: 2em auto 6em auto;
-    padding: 0;
-    width: 80%;
-    font-family: serif;
-    text-align: justify;
-    border-bottom: 1px solid #060;
-}
-
-.chapter > h1 {
-    font-size: 3em;
-    padding: 0 0 0 0.5em;
-    border-bottom: 1px solid #060;
-}
-.chapter > h2 {
-    font-size: 2em;
-    padding: 0 0 0 0.75em;
-}
-.chapter > h3 {
-    font-size: 1.75em;
-    padding: 0 0 0 0.8em;
-}
-
-.chapter p {
-    display: block;
-    width: 75%;
-}
-.chapter p.abstract {
-    font-size: 1.8em;
-}
-.chapter p.summary {
-    font-size: 1.25em;
-}
-.chapter p.summary-first-part {
-    margin: 1em 0 0 0;
-    font-size: 1.25em;
-}
-.chapter p.summary-part {
-    margin: 0;
-    font-size: 1.25em;
-}
-.chapter p.summary-last-part {
-    margin: 0 0 1em 0;
-    font-size: 1.25em;
-}
-.chapter p.abstract em, .chapter p.summary em {
-    color: #d0d006;
-    font-style: normal;
-}
-.chapter p > code {
-    padding: 2px;
-    color: #40cf40;
-    font-weight: bold;
-}
-.chapter p.note.important-note > code {
-    color: #000;
-}
-
-.chapter a {
-    color: inherit;
-}
-
-/*  Note cast to the right side of the screen.
- */
-.chapter p.note {
-    width: 21%;
-    padding: 1%;
-    margin: -1% 0 0 0;
-    font-size: 1em;
-    float: right;
-}
-.chapter p.note.for-summary, .chapter p.note.for-abstract {
-    margin: 0 0 1em 0;
-}
-.chapter p.note.important-note {
-    background-color: #afaf00;
-    color: #000;
-    box-shadow: 0 0 1em #ff0;
-}
-
-.clear {
-    margin: 0;
-    padding: 0;
-    clear: both;
-}
-.clear-right {
-    margin: 0;
-    padding: 0;
-    clear: right;
-}
-
-
-/** Big, fat warnings.
- */
-section.big-fat-warning, div.big-fat-warning {
-    display: block;
-    width: 90%;
-    margin: 1em auto;
-    padding: 1em;
-    border-radius: 0.25em;
-    background-color: #4f4f4f;
-}
-section.big-red-warning, div.big-red-warning {
-    background-color: #aa0000;
-    box-shadow: 0 0 2em #f00;
-}
-section.big-orange-warning, div.big-orange-warning {
-    background-color: #aa4e00;
-    box-shadow: 0 0 2em #aa4e00;
-}
-section.big-yellow-warning, div.big-yellow-warning {
-    background-color: #dada00;
-    box-shadow: 0 0 2em #ff0;
-}
-.big-fat-warning h1, .big-fat-warning p {
+    /*
+    background-color: #000;
     color: #fff;
+        */
 }
-.big-fat-warning a {
-    color: inherit;
+a {
+    /*
+    color: #0f0;
+    */
 }
-.big-yellow-warning h1, .big-yellow-warning p {
-    color: #000;
+.big-fat-warning {
+    /*
+    border: 1px solid #ff0;
+    */
+    border: 1px solid #f00;
+    margin: 10px 10%;
+    padding: 10px;
+}
+
+section section {
+    margin-left: 2%;
+}
+
+p {
+    margin-left: 1%;
 }
