@@ -2,17 +2,17 @@
 title: vinsert
 layout: isa_opcode
 isa_group: vectors
-canonical_form: 'vinsert target-vector:r-op source:r-op index'
+canonical_form: 'vinsert target-vector:r-op source:r-op index:r-op'
 summary: >
     Moves a value into the vector at a given index.
-    Elements after given index are shifted, starting with the element previously present at given index.
+    Elements after given index are shifted to the left, starting with the element previously present at given index.
 ---
 
 <section class="chapter">
     <h2> Syntax </h2>
 
     {% highlight lua %}
-nop
+vinsert target:r-op source:r-op index:r-op
     {% endhighlight %}
 </section>
 
@@ -21,6 +21,25 @@ nop
 
     {% highlight lua %}
 .function: example/0
+    .name: %iota the_vector
+    vec %the_vector local
+
+    .name: %iota the_index
+    istore %the_index local 0
+
+    .name: %iota the_text
+    vinsert %the_vector local (text %the_text "sheep!") %the_index local
+    vinsert %the_vector local (text %the_text "Hurr") %the_index local
+
+    istore %the_index local 1
+    vinsert %the_vector local (text %the_text "durr") %the_index local
+
+    istore %the_index local 2
+    vinsert %the_vector local (text %the_text "Im'a") %the_index local
+
+    print %the_vector local
+
+    izero %0 local
     return
 .end
     {% endhighlight %}
