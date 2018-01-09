@@ -24,6 +24,26 @@ layout: default
         advanced topics (such as concurrency primitives, FFI, resource management, etc.).
     </p>
 
+    <p>
+        There is a
+        <a href="/manual.txt">plaintext</a> version readable in the terminal (e.g. in lynx(1), or less(1) and
+        the like);
+        and two HTML versions: <a href="/manual.html">colorised</a> and
+        <a href="/manual.nocolor.html">browser-default</a> version.
+        The table of contents in HTML versions contains anchors to different parts of the document
+        for easier navigation.
+        However, it is served as a one big file so you can use the search functionality of less(1) or your
+        browser of choice instead of relying on the hyperlinks.
+    </p>
+
+    <p>
+        <ul>
+            <li> <a href="/manual.txt">plaintext</a> version </li>
+            <li> <a href="/manual.html">colorised HTML</a> version </li>
+            <li> <a href="/manual.nocolor.html">browser-default HTML</a> version </li>
+        </ul>
+    </p>
+
     <h3> Intended audience </h3>
 
     <p>
@@ -31,11 +51,3 @@ layout: default
         Reasonable proficiency in using a UNIX-like environment is also assumed where necessary.
     </p>
 </section>
-
-
-{% for art in site.manuals %}
-<section class="chapter">
-    <h2> <a href="{{ art.url }}">{{ art.title }}</a> </h2>
-    <p class="summary"> {{ art.summary }} </p>
-</section>
-{% endfor %}
